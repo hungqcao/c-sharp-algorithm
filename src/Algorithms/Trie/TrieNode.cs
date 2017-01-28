@@ -36,10 +36,18 @@ namespace Algorithms.Trie
             var firstLetter = lowerCaseWord[0];
 
             //Create child node
-            var childNode = new TrieNode();
+            TrieNode childNode = null;
+            if (root.Nodes[firstLetter - 'a'] == null)
+            {
+                childNode = new TrieNode();
 
-            //Asign to parent node
-            root.Nodes[firstLetter - 'a'] = childNode;
+                //Asign to parent node
+                root.Nodes[firstLetter - 'a'] = childNode;
+            }
+            else
+            {
+                childNode = root.Nodes[firstLetter - 'a'];
+            }
 
             //If we only have 1 letter left then mark it as leaf and return
             if (word.Length == 1)
