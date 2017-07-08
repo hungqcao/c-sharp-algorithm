@@ -44,6 +44,7 @@ namespace Algorithms
         }
 
         /// <summary>
+        /// Reverse words order.
         /// Strings.reverseString("  i   like  this program   very much   ");
         /// </summary>
         /// <param name="input"></param>
@@ -104,6 +105,164 @@ namespace Algorithms
                 res ^= t[i];
             }
             return res;
+        }
+
+        /// <summary>
+        /// Given a List of words, return the words that can be typed using letters of alphabet on only one row's of American keyboard like the image below.
+        /// </summary>
+        /// <param name="words"></param>
+        /// <returns></returns>
+        public static string[] FindWords(string[] words)
+        {
+            var row1s = "qwertyuiop".ToDictionary(_ => _);
+            var row2s = "asdfghjkl".ToDictionary(_ => _);
+            var row3s = "zxcvbnm".ToDictionary(_ => _);
+            var result = new List<string>();
+            Func<string, Dictionary<char, char>, bool> isValid = (characters, source) =>
+            {
+                var uniqueChars = new String(characters.Distinct().ToArray());
+                var res = true;
+                foreach (var c in uniqueChars)
+                {
+                    if (!source.ContainsKey(Char.ToLower(c)))
+                    {
+                        res = false;
+                        break;
+                    }
+                }
+
+                return res;
+            };
+
+            foreach (var w in words)
+            {
+                if (isValid(w, row1s))
+                {
+                    result.Add(w);
+                    continue;
+                }
+                if (isValid(w, row2s))
+                {
+                    result.Add(w);
+                    continue;
+                }
+                if (isValid(w, row3s))
+                {
+                    result.Add(w);
+                    continue;
+                }
+            }
+            return result.ToArray();
+        }
+
+        public static string[] FindWordsV2(string[] words)
+        {
+            char[][] keyboard = {
+                new char[] {'q', 'w', 'e', 'r', 't', 'y', 'i', 'u', 'o', 'p', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'},
+                new char[] {'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'},
+                new char[] {'z', 'x', 'c', 'v', 'b', 'n', 'm', 'Z', 'X', 'C', 'V', 'B', 'N', 'M'}
+            };
+            IList<string> result = new List<string>();
+
+            foreach (var word in words)
+            {
+                foreach (var row in keyboard)
+                {
+                    if (!row.Contains(word[0])) continue;
+
+                    var forget = false;
+
+                    for (var i = 1; i < word.Length; i++)
+                    {
+                        if (row.Contains(word[i])) continue;
+
+                        forget = true;
+                        break;
+                    }
+
+                    if (forget) break;
+
+                    result.Add(word);
+                    break;
+                }
+            }
+
+            return result.ToArray();
+        }
+
+        /// <summary>
+        /// Given a string, you need to reverse the order of characters in each word within a sentence while still preserving whitespace and initial word order.
+        ///        Example 1:
+        ///Input: "Let's take LeetCode contest"
+        ///Output: "s'teL ekat edoCteeL tsetnoc"
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static string ReverseWords(string s)
+        {
+            if (string.IsNullOrEmpty(s)) return string.Empty;
+
+            var ret = new StringBuilder();
+            var word = new StringBuilder();
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] != ' ')
+                {
+                    word.Append(s[i]);
+                }
+                else
+                {
+                    if (word.Length > 0)
+                    {
+                        //end of word
+                        ret.Append(new String(word.ToString().Reverse().ToArray()));
+                        word = new StringBuilder();
+                    }
+                    ret.Append(s[i]);
+                }
+            }
+
+            //last word
+            ret.Append(new String(word.ToString().Reverse().ToArray()));
+
+            return ret.ToString();
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/ransom-note/#/description
+        /// </summary>
+        /// <param name="ransomNote"></param>
+        /// <param name="magazine"></param>
+        /// <returns></returns>
+        public static bool CanConstruct(string ransomNote, string magazine)
+        {
+            var dict = new Dictionary<char, int>();
+            for (int i = 0; i < magazine.Length; i++)
+            {
+                if (dict.ContainsKey(magazine[i]))
+                {
+                    dict[magazine[i]]++;
+                }
+                else
+                {
+                    dict.Add(magazine[i], 1);
+                }
+            }
+
+            for (int i = 0; i < ransomNote.Length; i++)
+            {
+                if (dict.ContainsKey(ransomNote[i]))
+                {
+                    dict[ransomNote[i]]--;
+                    if (dict[ransomNote[i]] < 0) return false;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
