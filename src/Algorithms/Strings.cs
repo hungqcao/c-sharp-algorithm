@@ -264,5 +264,117 @@ namespace Algorithms
 
             return true;
         }
+
+        /// <summary>
+        /// https://leetcode.com/problems/detect-capital/#/description
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns></returns>
+        public static bool DetectCapitalUse(string word)
+        {
+            if (word.Length <= 1) return true;
+
+            int firstSeenCap = Char.IsUpper(word[0]) ? 0 : -1;
+            bool allCap = false;
+            bool allLow = false;
+            for (int i = 1; i < word.Length; i++)
+            {
+                if (Char.IsUpper(word[i]))
+                {
+                    if (allLow) return false;
+                    allCap = true;
+                    allLow = false;
+                }
+                else
+                {
+                    if (allCap) return false;
+                    allLow = true;
+                    allCap = false;
+                }
+            }
+            if (allCap && firstSeenCap == 0) return true;
+            if (allLow) return true;
+            return false;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/excel-sheet-column-number/#/description
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static int TitleToNumber(string s)
+        {
+            int ret = 0;
+            int times = 0;
+            for (int i = s.Length - 1; i >= 0; i--)
+            {
+                ret += (s[i] - 'A' + 1) * (int)Math.Pow(26, times);
+                times++;
+            }
+
+            return ret;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/relative-ranks/#/description
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public static string[] FindRelativeRanks(int[] nums)
+        {
+            var ordered = nums.OrderByDescending(_ => _).ToList();
+            var dict = new Dictionary<int, int>();
+            for (int i = 0; i < ordered.Count(); i++)
+            {
+                dict.Add(ordered[i], i);
+            }
+
+            return nums.Select((n, i) =>
+            {
+                var index = dict[n];
+                var ret = "";
+                if (index == 0) ret = "Gold medal";
+                else if (index == 1) ret = "Silver medal";
+                else if (index == 2) ret = "Bronze medal";
+                else ret = (index + 1).ToString();
+
+                return ret;
+            }).ToArray();
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/longest-palindrome/#/description
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static int LongestPalindrome(string s)
+        {
+            var dict = new Dictionary<char, int>();
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (dict.ContainsKey(s[i]))
+                {
+                    dict[s[i]]++;
+                }
+                else
+                {
+                    dict.Add(s[i], 1);
+                }
+            }
+
+            int ret = 0;
+            bool metOdd = false;
+            foreach (var item in dict)
+            {
+                if (item.Value % 2 == 0) ret += item.Value;
+                else
+                {
+                    ret += (item.Value / 2) * 2;
+                    if (!metOdd) { ret += item.Value % 2; metOdd = true; }                    
+                }
+            }
+
+            return ret;
+        }
     }
 }

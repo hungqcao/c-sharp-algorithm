@@ -610,11 +610,215 @@ namespace Algorithms.Array
             {
                 if (j < g.Length)
                 {
-                    if (s[i] >= g[j]) { ret++;j++; }
+                    if (s[i] >= g[j]) { ret++; j++; }
                 }
             }
 
             return ret;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/max-consecutive-ones/#/description
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public static int FindMaxConsecutiveOnes(int[] nums)
+        {
+            int ret = 0;
+            int start = -1, end = -1;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] == 1)
+                {
+                    if (end == -1) start = i;
+                    end = i;
+                }
+                else
+                {
+                    if (end != -1 && start != -1)
+                    {
+                        ret = Math.Max(ret, end - start + 1);
+                    }
+                    end = -1;
+                    start = -1;
+                }
+            }
+
+            if (end != -1 && start != -1)
+            {
+                ret = Math.Max(ret, end - start + 1);
+            }
+
+            return ret;
+
+            //int localMax = 0;
+            //int globalMax = 0;
+            //if (nums.Length == 0)
+            //    return 0;
+            //for (int i = 0; i < nums.Length; i++)
+            //{
+            //    if (nums[i] == 0)
+            //    {
+            //        localMax = 0;
+            //    }
+            //    else
+            //    {
+            //        localMax++;
+            //    }
+            //    globalMax = Math.Max(globalMax, localMax);
+            //}
+            //return globalMax;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/first-unique-character-in-a-string/#/description
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static int FirstUniqChar(string s)
+        {
+            int[] arr = new int[26];
+            for (int i = 0; i < s.Length; i++)
+            {
+                arr[s[i] - 'a']++;
+            }
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (arr[s[i] - 'a'] == 1)
+                    return i;
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/number-of-boomerangs/tabs/description
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public static int NumberOfBoomerangs(int[][] points)
+        {
+            Func<int[], int[], int> findDistance = (a, b) =>
+            {
+                int dx = a[0] - b[0];
+                int dy = a[1] - b[1];
+
+                return dx * dx + dy * dy;
+            };
+
+            int ret = 0;
+
+            var dict = new Dictionary<int, int>();
+            for (int i = 0; i < points.Length; i++)
+            {
+                for (int j = 0; j < points.Length; j++)
+                {
+                    if (i == j) continue;
+                    var distance = findDistance(points[i], points[j]);
+                    if (dict.ContainsKey(distance)) dict[distance]++;
+                    else dict.Add(distance, 1);
+                }
+
+                foreach (var item in dict)
+                {
+                    ret += item.Value * (item.Value - 1);
+                }
+
+                dict.Clear();
+            }
+
+            return ret;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns></returns>
+        public static IList<string> ReadBinaryWatch(int num)
+        {
+            if (num == 0) return new List<string>() { "0:00" };
+            if (num > 10) return new List<string>();
+
+            Dictionary<int, IList<Tuple<string, string>>> dict = new Dictionary<int, IList<Tuple<string, string>>>();
+            var hourFormat = "0000";
+            var minuteFormat = "000000";
+            for (int i = 1; i <= num; i++)
+            {
+                if (i == 1)
+                {
+                    var list1 = new List<Tuple<string, string>>();
+                    for (int m = 0; m < 6; m++)
+                    {
+                        var tmp = minuteFormat.ToArray();
+                        tmp[m] = '1';
+                        var tup = new Tuple<string, string>(hourFormat, new string(tmp));
+                        list1.Add(tup);
+                    }
+                    for (int h = 0; h < 4; h++)
+                    {
+                        var tmp = hourFormat.ToArray();
+                        tmp[h] = '1';
+                        var tup = new Tuple<string, string>(new string(tmp), minuteFormat);
+                        list1.Add(tup);
+                    }
+                    dict.Add(1, list1);
+                }
+                else
+                {
+                    var list = new List<Tuple<string, string>>();
+                    var prev = dict[i - 1];
+                    foreach (var item in prev)
+                    {
+                        var tmp = item.Item1 + ";" + item.Item2;
+                        for (int j = tmp.IndexOf('1'); j < tmp.Length; j++)
+                        {
+                            if (tmp[j] == ';' || tmp[j] == '1') continue;
+                            var tmpArr = tmp.ToArray();
+                            tmpArr[j] = '1';                            
+                            list.Add(new Tuple<string, string>(new string(tmpArr).Split(';')[0], new string(tmpArr).Split(';')[1]));
+                        }
+                    }
+                    dict.Add(i, list);
+                }
+            }
+
+            var ret = new List<string>();
+            foreach (var item in dict[num])
+            {
+                ret.Add(Convert.ToInt32(item.Item1, 2) + ":" + (Convert.ToInt32(item.Item2, 2).ToString().Length == 1 ? "0" + Convert.ToInt32(item.Item2, 2).ToString() : Convert.ToInt32(item.Item2, 2).ToString()));
+            }
+
+            return ret.OrderBy(_ => _).ToList();
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/intersection-of-two-arrays-ii/description/
+        /// </summary>
+        /// <param name="nums1"></param>
+        /// <param name="nums2"></param>
+        /// <returns></returns>
+        public static int[] Intersect(int[] nums1, int[] nums2)
+        {
+            var dict = new Dictionary<int, int>();
+            for (int i = 0; i < nums2.Length; i++)
+            {
+                if (dict.ContainsKey(nums2[i])) dict[nums2[i]]++;
+                else dict.Add(nums2[i], 1);
+            }
+
+            var ret = new List<int>();
+            for (int i = 0; i < nums1.Length; i++)
+            {
+                if(dict.ContainsKey(nums1[i]) && dict[nums1[i]] > 0)
+                {
+                    dict[nums1[i]]--;
+                    ret.Add(nums1[i]);
+                }
+            }
+
+            return ret.ToArray();
         }
     }
 }

@@ -57,24 +57,52 @@ namespace Algorithms
             //Arrays.ConstructRectangle(10);
             //Arrays.MaxCount(3, 3, new int[,] { { 2, 2 }, { 3, 3 } });
             //Arrays.firstDuplicate(new int[] { 2, 3, 3, 1, 5, 2 });
+            //Arrays.FindMaxConsecutiveOnes(new int[] { 1, 1, 0, 1, 0, 0, 1, 1, 1 });
             //Arrays.TwoSum(new int[] { -1, 0 }, -1);
+            //Arrays.FirstUniqChar("loveleetcode");
 
-            //var root = new TreeNode(5);
-            //var node3 = new TreeNode(3);
-            //var node8 = new TreeNode(8);
-            //var node1 = new TreeNode(1);
-            //var node4 = new TreeNode(4);
-            //var node6 = new TreeNode(6);
-            //var node9 = new TreeNode(9);
-            //root.left = node3;
-            //root.right = node8;
-            //node3.left = node1;
-            //node3.right = node4;
-            //node8.left = node6;
-            //node8.right = node9;
+            //[2147483647,2147483647,2147483647]
+            var root = new TreeNode(8);
+            var node3 = new TreeNode(3);
+            var node10 = new TreeNode(10);
+            var node1 = new TreeNode(1);
+            var node9 = new TreeNode(9);
+            var node14 = new TreeNode(14);
+            root.left = node3;
+            root.right = node10;
+            node3.left = node1;
+            node3.right = node9;
+            node10.right = node14;
+            node10.left = new TreeNode(15);
+            node1.left = new TreeNode(0);
+
             //BSTProblems.GetMinimumDifference(root);
+            //BSTProblems.ConvertBST(root);
+            //var ret = BSTProblems.IsCorr1BST(root);
+            //BSTProblems.connect2(root);
 
-            var a = Strings.reverseString("  i like this program      very much  ");
+            //var a = Strings.reverseString("  i like this program      very much  ");
+
+            //BinaryTreeProblems.AverageOfLevels(root);
+            //BinaryTreeProblems.Tree2str(root);
+            //BinaryTreeProblems.SumOfLeftLeaves(root);
+
+            //Strings.DetectCapitalUse("Google");
+            //Strings.DetectCapitalUse("USA");
+            //Strings.DetectCapitalUse("google");
+            //Strings.DetectCapitalUse("goOgle");
+            //Strings.DetectCapitalUse("googlE");
+            //Strings.TitleToNumber("AAA");
+            //Strings.FindRelativeRanks(new int[] { 1, 4, 3, 2, 5 });
+            //Strings.LongestPalindrome("ccc");
+            //int[][] jaggedArray3 =
+            //{
+            //    new int[] {0, 0},
+            //    new int[] {1, 0},
+            //    new int[] {2, 0}
+            //};
+            //Arrays.NumberOfBoomerangs(jaggedArray3);
+            var ret = Arrays.ReadBinaryWatch(2);
         }
     }
 }
