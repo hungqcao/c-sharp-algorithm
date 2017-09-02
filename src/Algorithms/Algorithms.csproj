@@ -45,7 +45,11 @@
   <ItemGroup>
     <Compile Include="Array\Arrays.cs" />
     <Compile Include="Array\PerimeterIsland.cs" />
+    <Compile Include="Backtracking\BackTrackingProblems.cs" />
     <Compile Include="Bit\BitManipulation.cs" />
+    <Compile Include="Graph\FriendCircleUnionFind.cs" />
+    <Compile Include="Graph\Problems.cs" />
+    <Compile Include="Graph\UnionFind.cs" />
     <Compile Include="LinkedList\LinkedList.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Program.cs" />

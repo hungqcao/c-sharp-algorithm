@@ -102,7 +102,17 @@ namespace Algorithms
             //    new int[] {2, 0}
             //};
             //Arrays.NumberOfBoomerangs(jaggedArray3);
-            var ret = Arrays.ReadBinaryWatch(2);
+            //var ret = Arrays.ReadBinaryWatch(2);
+            //BinaryTreeProblems.SortedArrayToBST(new int[] { 1, 2, 3, 4, 5 });
+
+            //int[,] input = new int[,] { { 1, 1, 0, 1 }, { 1, 1, 0, 1 }, { 0, 0, 1, 0 }, { 1, 1, 0, 0 } };
+            //var uf = new Graph.FriendCircleUnionFind();
+            //var count = uf.FindCircleNum(input);
+
+            //Arrays.productExceptSelf(new int[] { 1, 2, 3, 4 });
+
+            var backTrack = new Backtracking.BackTrackingProblems();
+            //backTrack.generateParenthesis(3);
         }
     }
 }

@@ -820,5 +820,28 @@ namespace Algorithms.Array
 
             return ret.ToArray();
         }
+
+        /// <summary>
+        /// https://leetcode.com/problems/product-of-array-except-self/discuss/
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public static int[] productExceptSelf(int[] nums)
+        {
+            int n = nums.Length;
+            int[] res = new int[n];
+            res[0] = 1;
+            for (int i = 1; i < n; i++)
+            {
+                res[i] = res[i - 1] * nums[i - 1];
+            }
+            int right = 1;
+            for (int i = n - 1; i >= 0; i--)
+            {
+                res[i] *= right;
+                right *= nums[i];
+            }
+            return res;
+        }
     }
 }

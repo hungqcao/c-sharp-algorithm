@@ -27,23 +27,297 @@ namespace Algorithms.Tree
             return newNode;
         }
 
-        public void IterativeInOrderTraverse(TreeNode root)
+        public static IList<int> InorderTraversal(TreeNode root)
         {
+            var ret = new List<int>();
+            InorderHelper(root, ret);
+            return ret;
+        }
+
+        private static void InorderHelper(TreeNode root, IList<int> ret)
+        {
+            if (root == null) return;
+
+            InorderHelper(root.left, ret);
+            ret.Add(root.val);
+            InorderHelper(root.right, ret);
+        }
+
+        public static IList<int> IterativeInorderTraversal(TreeNode root)
+        {
+            var ret = new List<int>();
+            if (root == null) return ret;
+
             Stack<TreeNode> stack = new Stack<TreeNode>();
             var node = root;
-            while (stack.Any() || node != null)
+            while (node != null)
             {
-                if (node != null)
+                stack.Push(node);
+                node = node.left;
+            }
+            while (stack.Any())
+            {
+                node = stack.Pop();
+                ret.Add(node.val);
+                if (node.right != null)
                 {
-                    stack.Push(node);
-                    node = node.left;
+                    node = node.right;
+                    while (node != null)
+                    {
+                        stack.Push(node);
+                        node = node.left;
+                    }
+                }
+            }
+
+            return ret;
+        }
+
+
+        public static IList<int> MorrisInorderTraversal(TreeNode root)
+        {
+            var ret = new List<int>();
+            if (root == null) return ret;
+
+            var curr = root;
+            TreeNode pre = null;
+
+            while(curr != null)
+            {
+                if(curr.left == null)
+                {
+                    //does not have left child
+                    ret.Add(curr.val);
+                    //go to the right child
+                    curr = curr.right;
                 }
                 else
                 {
-                    //visit(stack.Pop());
-                    node = node.right;
+                    //inorder predecessor of current
+                    pre = curr.left;
+                    while(pre.right != null && pre.right != curr)
+                    {
+                        pre = pre.right;
+                    }
+
+                    // make right child of predecessor to be current
+                    if(pre.right == null)
+                    {
+                        pre.right = curr;
+                        curr = curr.left;
+                    }
+                    //revert changes made
+                    else
+                    {
+                        pre.right = null;
+                        ret.Add(curr.val);
+                        curr = curr.right;
+                    }
                 }
             }
+
+            return ret;
+        }
+        public static IList<int> PreorderTraversal(TreeNode root)
+        {
+            var ret = new List<int>();
+            PreorderHelper(root, ret);
+            return ret;
+        }
+
+        private static void PreorderHelper(TreeNode root, IList<int> ret)
+        {
+            if (root == null) return;
+
+            ret.Add(root.val);
+            PreorderHelper(root.left, ret);
+            PreorderHelper(root.right, ret);
+        }
+
+        public static IList<int> IterativePreorderTraversal(TreeNode root)
+        {
+            var ret = new List<int>();
+            if (root == null) return ret;
+
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            var node = root;
+            stack.Push(root);
+            while (stack.Any())
+            {
+                node = stack.Pop();
+                ret.Add(node.val);
+                if (node.right != null)
+                {
+                    stack.Push(node.right);
+                }
+                if (node.left != null)
+                {
+                    stack.Push(node.left);
+                }
+            }
+
+            return ret;
+        }
+
+
+        public static IList<int> MorrisPreorderTraversal(TreeNode root)
+        {
+            var ret = new List<int>();
+            if (root == null) return ret;
+
+            var curr = root;
+            TreeNode pre = null;
+
+            while (curr != null)
+            {
+                if (curr.left != null)
+                {
+                    // keep prev
+                    pre = curr.left;
+                    while(pre.right != null && pre.right != curr)
+                    {
+                        pre = pre.right;
+                    }
+                    
+                    if(pre.right == curr)
+                    {
+                        curr = curr.right;
+                        pre.right = null;
+                    }
+                    else
+                    {
+                        pre.right = curr;
+                        ret.Add(curr.val);
+                        curr = curr.left;
+                    }
+                }
+                else
+                {
+                    ret.Add(curr.val);
+                    curr = curr.right;
+                }
+            }
+
+            return ret;
+        }
+        public static IList<int> PostorderTraversal(TreeNode root)
+        {
+            var ret = new List<int>();
+            PostorderHelper(root, ret);
+            return ret;
+        }
+
+        private static void PostorderHelper(TreeNode root, IList<int> ret)
+        {
+            if (root == null) return;
+
+            PostorderHelper(root.left, ret);
+            PostorderHelper(root.right, ret);
+            ret.Add(root.val);
+        }
+
+        public static IList<int> IterativePostorderTraversalUsing2Stack(TreeNode root)
+        {
+            var ret = new List<int>();
+            if (root == null) return ret;
+
+            Stack<TreeNode> stack1 = new Stack<TreeNode>();
+            stack1.Push(root);
+            Stack<TreeNode> stack2 = new Stack<TreeNode>();
+
+            while (stack1.Any())
+            {
+                var tmp = stack1.Pop();
+                stack2.Push(tmp);
+                if (tmp.left != null)
+                {
+                    stack1.Push(tmp.left);
+                }
+                if (tmp.right != null)
+                {
+                    stack1.Push(tmp.right);
+                }
+            }
+
+            while (stack2.Any())
+            {
+                ret.Add(stack2.Pop().val);
+            }
+
+            return ret;
+        }
+
+        public static IList<int> IterativePostorderTraversalUsing1Stack(TreeNode root)
+        {
+            var ret = new List<int>();
+            if (root == null) return ret;
+
+            Stack<TreeNode> stack1 = new Stack<TreeNode>();
+            stack1.Push(root);
+            Stack<TreeNode> stack2 = new Stack<TreeNode>();
+
+            while (stack1.Any())
+            {
+                var tmp = stack1.Pop();
+                stack2.Push(tmp);
+                if (tmp.left != null)
+                {
+                    stack1.Push(tmp.left);
+                }
+                if (tmp.right != null)
+                {
+                    stack1.Push(tmp.right);
+                }
+            }
+
+            while (stack2.Any())
+            {
+                ret.Add(stack2.Pop().val);
+            }
+
+            return ret;
+        }
+
+
+        public static IList<int> MorrisPreorderTraversal(TreeNode root)
+        {
+            var ret = new List<int>();
+            if (root == null) return ret;
+
+            var curr = root;
+            TreeNode pre = null;
+
+            while (curr != null)
+            {
+                if (curr.left != null)
+                {
+                    // keep prev
+                    pre = curr.left;
+                    while (pre.right != null && pre.right != curr)
+                    {
+                        pre = pre.right;
+                    }
+
+                    if (pre.right == curr)
+                    {
+                        curr = curr.right;
+                        pre.right = null;
+                    }
+                    else
+                    {
+                        pre.right = curr;
+                        ret.Add(curr.val);
+                        curr = curr.left;
+                    }
+                }
+                else
+                {
+                    ret.Add(curr.val);
+                    curr = curr.right;
+                }
+            }
+
+            return ret;
         }
 
         /// <summary>
@@ -193,6 +467,27 @@ namespace Algorithms.Tree
             max = Math.Max(current, max);
             DiameterOfBinaryTree(root.left, ref max);
             DiameterOfBinaryTree(root.right, ref max);
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/description/
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public static TreeNode SortedArrayToBST(int[] nums)
+        {
+            return createNode(nums, 0, nums.Length - 1);
+        }
+
+        private static TreeNode createNode(int[] nums, int head, int tail)
+        {
+            if (head > tail) return null;
+            else if (head == tail) return new TreeNode(nums[head]);
+            int mid = (head + tail) / 2;
+            var node = new TreeNode(nums[mid]);
+            node.left = createNode(nums, head, mid - 1);
+            node.right = createNode(nums, mid + 1, tail);
+            return node;
         }
     }
 }
