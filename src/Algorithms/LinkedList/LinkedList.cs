@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Algorithms.LinkedList
 {
-    class LinkedList
+    public class LinkedList
     {
         public Node reverse(Node head)
         {
@@ -43,6 +43,46 @@ namespace Algorithms.LinkedList
                 result.next = mergeSortedLinkedList(a, b.next);
             }
             return result;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/baseball-game/description/
+        /// </summary>
+        /// <param name="ops"></param>
+        /// <returns></returns>
+        public static int CalPoints(string[] ops)
+        {
+            var ret = 0;
+            var linkedList = new LinkedList<int>();
+
+            for (int i = 0; i < ops.Length; i++)
+            {
+                switch (ops[i])
+                {
+                    case "C":
+                        var last = linkedList.Last;
+                        ret -= last.Value;
+                        linkedList.RemoveLast();
+                        break;
+                    case "D":
+                        var lst = linkedList.Last.Value;
+                        linkedList.AddLast(lst * 2);
+                        ret += lst * 2;
+                        break;
+                    case "+":
+                        var point = linkedList.Last.Value + linkedList.Last.Previous.Value;
+                        linkedList.AddLast(point);
+                        ret += point;
+                        break;
+                    default:
+                        var cur = int.Parse(ops[i]);
+                        linkedList.AddLast(cur);
+                        ret += cur;
+                        break;
+                }
+            }
+
+            return ret;
         }
     }
 }

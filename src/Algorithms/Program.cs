@@ -53,7 +53,7 @@ namespace Algorithms
 
 
             //Arrays.NextGreaterElement(new int[] { 4, 1, 2 }, new int[] { 4, 3, 1, 2 });
-            //Arrays.MoveZeroes(new int[] { 0, 1, 4, 3, 12, 0, 0, 3, 0 });
+            Arrays.MoveZeroes(new int[] { 0, 4, 8, 0, 4, 1, 13, 0 });
             //Arrays.ConstructRectangle(10);
             //Arrays.MaxCount(3, 3, new int[,] { { 2, 2 }, { 3, 3 } });
             //Arrays.firstDuplicate(new int[] { 2, 3, 3, 1, 5, 2 });
@@ -62,19 +62,24 @@ namespace Algorithms
             //Arrays.FirstUniqChar("loveleetcode");
 
             //[2147483647,2147483647,2147483647]
-            var root = new TreeNode(8);
+            var root = new TreeNode(10);
+            var node5 = new TreeNode(5);
+            var nodeM3 = new TreeNode(-3);
             var node3 = new TreeNode(3);
-            var node10 = new TreeNode(10);
+            var node2 = new TreeNode(2);
+            var node11 = new TreeNode(11);
+            var node3_1 = new TreeNode(3);
+            var nodeM2 = new TreeNode(-2);
             var node1 = new TreeNode(1);
-            var node9 = new TreeNode(9);
-            var node14 = new TreeNode(14);
-            root.left = node3;
-            root.right = node10;
-            node3.left = node1;
-            node3.right = node9;
-            node10.right = node14;
-            node10.left = new TreeNode(15);
-            node1.left = new TreeNode(0);
+            root.left = node5;
+            root.right = nodeM3;
+            node5.left = node3;
+            node5.right = node2;
+            nodeM3.right = node11;
+            node3.right = nodeM2;
+            node3.left = node3_1;
+            node2.right = node1;
+            BinaryTreeProblems.pathSum(root, 8);
 
             //BSTProblems.GetMinimumDifference(root);
             //BSTProblems.ConvertBST(root);
@@ -113,6 +118,28 @@ namespace Algorithms
 
             var backTrack = new Backtracking.BackTrackingProblems();
             //backTrack.generateParenthesis(3);
+            //Arrays.FindDuplicate(new int[] { 2, 3, 1, 1, 4, 5, 6 });
+
+
+
+            //var root = new GNode(1);
+            //var node1 = new GNode(2);
+            //var node2 = new GNode(3);
+            //var node3 = new GNode(4);
+            //root.Children = new GNode[] { node1, node2, node3 };
+            //var node4 = new GNode(5);
+            //var node5 = new GNode(6);
+            //node1.Children = new GNode[] { node4, node5 };
+            //var node6 = new GNode(7);
+            //node3.Children = new GNode[] { node6 };
+
+            //var node7 = new GNode(8);
+            //node4.Children = new GNode[] { node7 };
+            //var node8 = new GNode(9);
+            //node6.Children = new GNode[] { node8 };
+            //Trees.Connect(root);
+            Arrays.maxProfit(new int[] { 4, 5, 1, 8, 10 });
+            Console.Read();
         }
     }
 }

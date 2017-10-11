@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Algorithms
 {
-    class Strings
+    public class Strings
     {
         /// <summary>
         /// Strings.removeDupplicatesInString("geeksforgeeks");
@@ -370,11 +370,31 @@ namespace Algorithms
                 else
                 {
                     ret += (item.Value / 2) * 2;
-                    if (!metOdd) { ret += item.Value % 2; metOdd = true; }                    
+                    if (!metOdd) { ret += item.Value % 2; metOdd = true; }
                 }
             }
 
             return ret;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/judge-route-circle/description/
+        /// </summary>
+        /// <param name="moves"></param>
+        /// <returns></returns>
+        public static bool JudgeCircle(string moves)
+        {
+            var dict = new Dictionary<char, int>();
+            dict.AddOrSet('U', 0);
+            dict.AddOrSet('D', 0);
+            dict.AddOrSet('L', 0);
+            dict.AddOrSet('R', 0);
+            for (int i = 0; i < moves.Length; i++)
+            {
+                dict.AddOrSet(moves[i], (cur) => ++cur);
+            }
+
+            return (dict['U'] == dict['D']) && (dict['L'] == dict['R']);
         }
     }
 }

@@ -82,9 +82,9 @@ namespace Algorithms.Tree
             var curr = root;
             TreeNode pre = null;
 
-            while(curr != null)
+            while (curr != null)
             {
-                if(curr.left == null)
+                if (curr.left == null)
                 {
                     //does not have left child
                     ret.Add(curr.val);
@@ -95,13 +95,13 @@ namespace Algorithms.Tree
                 {
                     //inorder predecessor of current
                     pre = curr.left;
-                    while(pre.right != null && pre.right != curr)
+                    while (pre.right != null && pre.right != curr)
                     {
                         pre = pre.right;
                     }
 
                     // make right child of predecessor to be current
-                    if(pre.right == null)
+                    if (pre.right == null)
                     {
                         pre.right = curr;
                         curr = curr.left;
@@ -174,12 +174,12 @@ namespace Algorithms.Tree
                 {
                     // keep prev
                     pre = curr.left;
-                    while(pre.right != null && pre.right != curr)
+                    while (pre.right != null && pre.right != curr)
                     {
                         pre = pre.right;
                     }
-                    
-                    if(pre.right == curr)
+
+                    if (pre.right == curr)
                     {
                         curr = curr.right;
                         pre.right = null;
@@ -279,7 +279,7 @@ namespace Algorithms.Tree
         }
 
 
-        public static IList<int> MorrisPreorderTraversal(TreeNode root)
+        public static IList<int> MorrisPostorderTraversal(TreeNode root)
         {
             var ret = new List<int>();
             if (root == null) return ret;
@@ -333,7 +333,7 @@ namespace Algorithms.Tree
             queue.Enqueue(null);
             var count = 0;
             var total = 0.0;
-            while(queue.Any())
+            while (queue.Any())
             {
                 var current = queue.Dequeue();
                 if (current != null)
@@ -422,7 +422,7 @@ namespace Algorithms.Tree
 
         private static int FindLeftLeaveValues(TreeNode currentNode, TreeNode parent)
         {
-            if(currentNode != null && parent.left == currentNode && currentNode.left == null && currentNode.right == null)
+            if (currentNode != null && parent.left == currentNode && currentNode.left == null && currentNode.right == null)
             {
                 return currentNode.val;
             }
@@ -488,6 +488,191 @@ namespace Algorithms.Tree
             node.left = createNode(nums, head, mid - 1);
             node.right = createNode(nums, mid + 1, tail);
             return node;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/path-sum-iii/discuss/
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="sum"></param>
+        /// <returns></returns>
+        public static int pathSum(TreeNode root, int sum)
+        {
+            Dictionary<int, int> preSum = new Dictionary<int, int>();
+            preSum.Add(0, 1);
+            return helper(root, 0, sum, preSum);
+        }
+
+        public static int helper(TreeNode root, int currSum, int target, Dictionary<int, int> preSum)
+        {
+            if (root == null)
+            {
+                return 0;
+            }
+
+            currSum += root.val;
+            int res = preSum.GetValueOrDefault(currSum - target, 0);
+            preSum.AddOrSet(currSum, preSum.GetValueOrDefault(currSum, 0) + 1);
+
+            res += helper(root.left, currSum, target, preSum) + helper(root.right, currSum, target, preSum);
+            preSum.AddOrSet(currSum, preSum[currSum] - 1);
+            return res;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/second-minimum-node-in-a-binary-tree/description/
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public static int FindSecondMinimumValue(TreeNode root)
+        {
+            if (root == null) return -1;
+            return FindSecondMinimumValue(root, root.val);
+        }
+
+        private static int FindSecondMinimumValue(TreeNode root, int rootValue)
+        {
+            if (root == null) return -1;
+            if (root.val > rootValue) return root.val;
+
+            var left = FindSecondMinimumValue(root.left, rootValue);
+            var right = FindSecondMinimumValue(root.right, rootValue);
+            if (left == -1) return right;
+            if (right == -1) return left;
+            return Math.Min(left, right);
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/subtree-of-another-tree/description/
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public static bool IsSubtree(TreeNode s, TreeNode t)
+        {
+            if (s == null) return false;
+            if (IsSameTree(s, t)) return true;
+
+            return IsSubtree(s.left, t) || IsSubtree(s.right, t);
+        }
+
+        private static bool IsSameTree(TreeNode s, TreeNode t)
+        {
+            if (t == null && s == null) return true;
+            if (t == null || s == null) return false;
+
+            if (s.val != t.val) return false;
+
+            return IsSameTree(s.left, t.left) && IsSameTree(s.right, t.right);
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/binary-tree-level-order-traversal-ii/description/
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public static IList<IList<int>> LevelOrderBottom(TreeNode root)
+        {
+            var ret = new LinkedList<List<int>>();
+            LevelOrderBottom(root, 0, ret);
+            IList<IList<int>> ret2 = new List<IList<int>>();
+            foreach (var item in ret)
+            {
+                ret2.Add(item);
+            }
+            return ret2;
+        }
+
+        private static void LevelOrderBottom(TreeNode root, int level, LinkedList<List<int>> collection)
+        {
+            if (root == null) return;
+            if (collection.Count < level + 1) collection.AddFirst(new List<int>());
+
+            collection.ElementAt(collection.Count - 1 - level).Add(root.val);
+            LevelOrderBottom(root.left, level + 1, collection);
+            LevelOrderBottom(root.right, level + 1, collection);
+        }
+
+        /// <summary>        
+        /// https://leetcode.com/problems/binary-tree-paths/description/
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public static IList<string> BinaryTreePaths(TreeNode root)
+        {
+            var ret = new List<string>();
+            BinaryTreePathsHelper(root, new StringBuilder(), ret);
+            return ret;
+        }
+
+        private static void BinaryTreePathsHelper(TreeNode treeNode, StringBuilder builder, IList<string> ret)
+        {
+            if (treeNode == null) return;
+            builder.Append(treeNode.val);
+            if ((treeNode.left == null && treeNode.right == null))
+            {
+                ret.Add(builder.ToString());
+                return;
+            }
+            if (!(treeNode.left == null && treeNode.right == null))
+                builder.Append("->");
+            BinaryTreePathsHelper(treeNode.left, new StringBuilder(builder.ToString()), ret);
+            BinaryTreePathsHelper(treeNode.right, new StringBuilder(builder.ToString()), ret);
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/symmetric-tree/description/
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public static bool IsSymmetric(TreeNode root)
+        {
+            return root == null || IsSymmetricHelper(root.left, root.right);
+        }
+
+        public static bool IsSymmetric_Iterative(TreeNode root)
+        {
+            if (root == null) return true;
+            var stack1 = new Stack<TreeNode>();
+            stack1.Push(root.left);
+            var stack2 = new Stack<TreeNode>();
+            stack2.Push(root.right);
+
+            var ret = true;
+
+            while (stack1.Any() && stack2.Any())
+            {
+                var left = stack1.Pop();
+                var right = stack2.Pop();
+
+                if (left == null || right == null) ret = ret && (left == right);
+                else
+                    ret = ret && left.val == right.val;
+
+                if (!ret) return false;
+
+                if (left != null)
+                {
+                    stack1.Push(left.left);
+                    stack1.Push(left.right);
+                }
+                if (right != null)
+                {
+                    stack2.Push(right.right);
+                    stack2.Push(right.left);
+                }
+            }
+
+            if (stack1.Any() || stack2.Any()) return false;
+
+            return ret;
+        }
+
+        private static bool IsSymmetricHelper(TreeNode node1, TreeNode node2)
+        {
+            if (node1 == null || node2 == null) return node1 == node2;
+
+            return node1.val == node2.val && IsSymmetricHelper(node1.left, node2.right) && IsSymmetricHelper(node1.right, node2.left);
         }
     }
 }

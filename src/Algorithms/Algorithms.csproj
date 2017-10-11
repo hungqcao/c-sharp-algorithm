@@ -64,6 +64,7 @@
     <Compile Include="Tree\BinarySearchTree\BSTProblems.cs" />
     <Compile Include="Tree\BinaryTreeProblems.cs" />
     <Compile Include="Tree\Node.cs" />
+    <Compile Include="Tree\Trees.cs" />
     <Compile Include="Trie\TrieNode.cs" />
     <Compile Include="UnionFind.cs" />
     <Compile Include="Utils.cs" />

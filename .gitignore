@@ -1,2 +1,6 @@
 src/Algorithms/obj/
 src/Algorithms/bin/
+src/.vs/
+src/packages/
+src/UnitTestProject/obj/
+src/UnitTestProject/bin/

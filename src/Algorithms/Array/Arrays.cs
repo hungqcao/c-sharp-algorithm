@@ -843,5 +843,91 @@ namespace Algorithms.Array
             }
             return res;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public static int FindDuplicate(int[] nums)
+        {
+            if (nums.Length > 1)
+            {
+                int slow = nums[0];
+                int fast = nums[nums[0]];
+                while (slow != fast)
+                {
+                    slow = nums[slow];
+                    fast = nums[nums[fast]];
+                }
+
+                fast = 0;
+                while (fast != slow)
+                {
+                    fast = nums[fast];
+                    slow = nums[slow];
+                }
+                return slow;
+            }
+            return -1;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="prices"></param>
+        /// <returns></returns>
+        public static int maxProfit(int[] prices)
+        {
+            int maxCur = 0, maxSoFar = 0;
+            for (int i = 1; i < prices.Length; i++)
+            {
+                maxCur = Math.Max(0, maxCur += prices[i] - prices[i - 1]);
+                maxSoFar = Math.Max(maxCur, maxSoFar);
+            }
+            return maxSoFar;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/longest-continuous-increasing-subsequence/description/
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public static int FindLengthOfLCIS(int[] nums)
+        {
+            if (nums == null || !nums.Any()) return 0;
+            var ret = 1;
+            var curMax = 1;
+            for (int i = 1; i < nums.Length; i++)
+            {
+                if (nums[i] > nums[i - 1]) curMax++;
+                else
+                {
+                    ret = Math.Max(curMax, ret);
+                    curMax = 1;
+                }
+            }
+
+            return Math.Max(curMax, ret);
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/house-robber/description/
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public static int Rob(int[] nums)
+        {
+            int rob = 0;
+            int norob = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                int cur = norob + nums[i];
+                norob = Math.Max(norob, rob);
+                rob = cur;
+            }
+
+            return Math.Max(norob, rob);
+        }
     }
 }
