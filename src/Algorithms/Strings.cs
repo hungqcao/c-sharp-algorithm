@@ -396,5 +396,91 @@ namespace Algorithms
 
             return (dict['U'] == dict['D']) && (dict['L'] == dict['R']);
         }
+
+        /// <summary>
+        /// https://leetcode.com/problems/reverse-vowels-of-a-string/description/
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static string ReverseVowels(string s)
+        {
+            if (s == null || s.Length == 0) return s;
+            string vowels = "aeiouAEIOU";
+            char[] chars = vowels.ToCharArray();
+            int start = 0;
+            int end = s.Length - 1;
+            char[] ret = s.ToCharArray();
+            while (start < end)
+            {
+                while (start < s.Length)
+                {
+                    if (chars.Contains(s[start])) break;
+                    start++;
+                }
+
+                while (end > 0)
+                {
+                    if (chars.Contains(s[end])) break;
+                    end--;
+                }
+
+                if (start < end)
+                {
+                    ret = Utils.SwapCharacters2(ret, start, end);
+                }
+                start++;
+                end--;
+            }
+
+            return new string(ret);
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/repeated-substring-pattern/description/
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static bool RepeatedSubstringPattern(string s)
+        {
+            for (int i = 1; i <= s.Length / 2; i++)
+            {
+                if (s.Length % i == 0)
+                {
+                    var tmp = s.Substring(0, i);
+                    var builder = new StringBuilder();
+                    for (int j = 0; j < s.Length / i; j++)
+                    {
+                        builder.Append(tmp);
+                    }
+                    if (builder.ToString().Equals(s))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/isomorphic-strings/description/
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public static bool IsIsomorphic(string s, string t)
+        {
+            if (s == null || t == null || s.Length != t.Length) return false;
+            var d1 = new int[256];
+            var d2 = new int[256];
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (d1[s[i]] != d2[t[i]]) return false;
+                d1[s[i]] = i + 1;
+                d2[t[i]] = i + 1;
+            }
+
+            return true;
+        }
     }
 }

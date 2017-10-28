@@ -69,5 +69,32 @@ namespace UnitTestProject.Tree
             var result = Algorithms.Tree.BinaryTreeProblems.IsSymmetric_Iterative(node2);
             Assert.AreEqual(result, false);
         }
+
+        [TestMethod]
+        public void Test_PathSum2()
+        {
+            var node1 = new TreeNode(5);
+            var node2 = new TreeNode(4);
+            var node3 = new TreeNode(8);
+            var node4 = new TreeNode(11);
+            var node5 = new TreeNode(13);
+            var node6 = new TreeNode(4);
+            var node7 = new TreeNode(7);
+            var node8 = new TreeNode(2);
+            var node9 = new TreeNode(5);
+            var node10 = new TreeNode(1);
+            node1.left = node2;
+            node1.right = node3;
+            node2.left = node4;
+            node3.left = node5;
+            node3.right = node6;
+            node4.left = node7;
+            node4.right = node8;
+            node6.left = node9;
+            node6.right = node10;
+
+            var result = Algorithms.Tree.BinaryTreeProblems.PathSum(node1, 22);
+            Assert.AreEqual(result.Count, 2);
+        }
     }
 }

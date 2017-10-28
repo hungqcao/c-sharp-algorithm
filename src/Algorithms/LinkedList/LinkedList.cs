@@ -8,20 +8,20 @@ namespace Algorithms.LinkedList
 {
     public class LinkedList
     {
-        public Node reverse(Node head)
+        public ListNode reverse(ListNode head)
         {
-            Node current = head;
-            Node prev = null;
+            ListNode current = head;
+            ListNode prev = null;
             while (current != null)
             {
-                Node next = current.next;
+                ListNode next = current.next;
                 current.next = prev;
                 prev = current;
                 current = next;
             }
             return prev;
         }
-        public static Node mergeSortedLinkedList(Node a, Node b)
+        public static ListNode mergeSortedLinkedList(ListNode a, ListNode b)
         {
             if (a == null)
             {
@@ -31,7 +31,7 @@ namespace Algorithms.LinkedList
             {
                 return a;
             }
-            Node result = null;
+            ListNode result = null;
             if (a.val <= b.val)
             {
                 result = a;
@@ -83,6 +83,62 @@ namespace Algorithms.LinkedList
             }
 
             return ret;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/linked-list-cycle/description/
+        /// </summary>
+        /// <param name="head"></param>
+        /// <returns></returns>
+        public static bool HasCycle(ListNode head)
+        {
+            if (head == null) return false;
+
+            var slow = head;
+            var fast = head;
+            while (slow != null && slow.next != null && fast != null && fast.next != null && fast.next.next != null)
+            {
+                slow = slow.next;
+                fast = fast.next.next;
+                if(slow.val == fast.val)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static ListNode DetectCycle(ListNode head)
+        {
+            if (head == null) return null;
+
+            var slow = head;
+            var fast = head;
+            while (fast != null && fast.next.next != null)
+            {
+                slow = slow.next;
+                fast = fast.next.next;
+                if (slow.val == fast.val)
+                {
+                    return FindCycle(slow, head);
+                }
+            }
+
+            return null;
+        }
+
+        public static ListNode FindCycle(ListNode node, ListNode head)
+        {
+            var tmp = node;
+            
+            while(tmp != head)
+            {
+                tmp = tmp.next;
+                head = head.next;
+            }
+
+            return tmp;
         }
     }
 }

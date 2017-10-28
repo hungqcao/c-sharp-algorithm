@@ -674,5 +674,73 @@ namespace Algorithms.Tree
 
             return node1.val == node2.val && IsSymmetricHelper(node1.left, node2.right) && IsSymmetricHelper(node1.right, node2.left);
         }
+
+        /// <summary>
+        /// https://leetcode.com/problems/balanced-binary-tree/description/
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public static bool IsBalanced(TreeNode root)
+        {
+            if (root == null) return true;
+
+            int left = MaxDepth(root.left, 0);
+            int right = MaxDepth(root.right, 0);
+
+            return Math.Abs(left - right) <= 1 && IsBalanced(root.left) && IsBalanced(root.right);
+        }
+
+        public static bool IsBalancedBottomUp(TreeNode root)
+        {
+            return dfsHeight(root) != -1;
+        }
+
+        public static int dfsHeight(TreeNode node)
+        {
+            if (node == null) return 0;
+
+            int left = dfsHeight(node.left);
+            if (left == -1) return left;
+            int right = dfsHeight(node.right);
+            if (right == -1) return right;
+
+            if (Math.Abs(left - right) > 1) return -1;
+            return Math.Max(left, right) + 1;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/path-sum/description/
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="sum"></param>
+        /// <returns></returns>
+        public static bool HasPathSum(TreeNode root, int sum)
+        {
+            if (root == null) return sum == 0;
+            if (root.left == null && root.right == null && sum - root.val == 0) return true;
+            return HasPathSum(root.left, sum - root.val) || HasPathSum(root.right, sum - root.val);
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/path-sum-ii/description/
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="sum"></param>
+        /// <returns></returns>
+        public static IList<IList<int>> PathSum(TreeNode root, int sum)
+        {
+            var ret = new List<IList<int>>();
+            void LocalHelper(TreeNode node, IList<int> path, int curSum)
+            {
+                if (node == null) return;
+                path.Add(node.val);
+                if (node.left == null && node.right == null && curSum - node.val == 0) ret.Add(path);
+                LocalHelper(node.left, new List<int>(path), curSum - node.val);
+                LocalHelper(node.right, new List<int>(path), curSum - node.val);
+            }
+
+            LocalHelper(root, new List<int>(), sum);
+            return ret;
+        }
     }
 }

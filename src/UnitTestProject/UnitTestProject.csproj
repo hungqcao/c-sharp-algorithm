@@ -52,6 +52,7 @@
     <Compile Include="LinkedLists\UnitTests.cs" />
     <Compile Include="Strings\UnitTests.cs" />
     <Compile Include="Tree\BinaryTreeTests.cs" />
+    <Compile Include="Tree\BST.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

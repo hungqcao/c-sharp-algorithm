@@ -1,4 +1,4 @@
-﻿using Algorithms.Array;
+﻿using Algorithms.ArrayProb;
 using Algorithms.Bit;
 using Algorithms.Sorting;
 using Algorithms.Tree;
@@ -53,7 +53,7 @@ namespace Algorithms
 
 
             //Arrays.NextGreaterElement(new int[] { 4, 1, 2 }, new int[] { 4, 3, 1, 2 });
-            Arrays.MoveZeroes(new int[] { 0, 4, 8, 0, 4, 1, 13, 0 });
+            //Arrays.MoveZeroes(new int[] { 0, 4, 8, 0, 4, 1, 13, 0 });
             //Arrays.ConstructRectangle(10);
             //Arrays.MaxCount(3, 3, new int[,] { { 2, 2 }, { 3, 3 } });
             //Arrays.firstDuplicate(new int[] { 2, 3, 3, 1, 5, 2 });

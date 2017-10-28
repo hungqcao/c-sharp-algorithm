@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 
 namespace Algorithms
 {
-    public class Node
+    public class ListNode
     {
-        public Node next { get; set; }
+        public ListNode(int v)
+        {
+            this.val = v;
+        }
+
+        public ListNode next { get; set; }
         public int val { get; set; }
     }
 }

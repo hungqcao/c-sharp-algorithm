@@ -191,7 +191,7 @@ IsCorr1BST  should return true, and print 9.*/
         public static void connect(TreeNode root)
         {
             if (root == null)
-                return;            
+                return;
 
             if (root.left != null)
             {
@@ -231,6 +231,49 @@ IsCorr1BST  should return true, and print 9.*/
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/find-mode-in-binary-search-tree/description/
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public static int[] FindMode(TreeNode root)
+        {
+            max = 0;
+            cur = 1;
+            prev = null;
+            var ret = new List<int>();
+            FindModeHelper(root, ret);
+            return ret.ToArray();
+        }
+
+        private static int max = 0;
+        private static int cur = 1;
+        private static void FindModeHelper(TreeNode treeNode, List<int> ret)
+        {
+            if (treeNode == null) return;
+            FindModeHelper(treeNode.left, ret);
+            if (prev != null)
+            {
+                if (treeNode.val == prev.val)
+                {
+                    cur++;
+                }
+                else cur = 1;
+            }
+            if (cur > max)
+            {
+                max = cur;
+                ret.Clear();
+                ret.Add(treeNode.val);
+            }
+            else if (cur == max)
+            {
+                ret.Add(treeNode.val);
+            }
+            prev = treeNode;
+            FindModeHelper(treeNode.right, ret);
         }
 
     }

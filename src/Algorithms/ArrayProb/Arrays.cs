@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Algorithms.Array
+namespace Algorithms.ArrayProb
 {
     public class Arrays
     {
@@ -504,7 +505,7 @@ namespace Algorithms.Array
         /// <param name="numbers"></param>
         /// <param name="target"></param>
         /// <returns></returns>
-        public static int[] TwoSum(int[] numbers, int target)
+        public static int[] TwoSum2Pointers(int[] numbers, int target)
         {
             //int[] ret = new int[2];
             //int tail = numbers.Length - 1;
@@ -776,7 +777,7 @@ namespace Algorithms.Array
                         {
                             if (tmp[j] == ';' || tmp[j] == '1') continue;
                             var tmpArr = tmp.ToArray();
-                            tmpArr[j] = '1';                            
+                            tmpArr[j] = '1';
                             list.Add(new Tuple<string, string>(new string(tmpArr).Split(';')[0], new string(tmpArr).Split(';')[1]));
                         }
                     }
@@ -811,7 +812,7 @@ namespace Algorithms.Array
             var ret = new List<int>();
             for (int i = 0; i < nums1.Length; i++)
             {
-                if(dict.ContainsKey(nums1[i]) && dict[nums1[i]] > 0)
+                if (dict.ContainsKey(nums1[i]) && dict[nums1[i]] > 0)
                 {
                     dict[nums1[i]]--;
                     ret.Add(nums1[i]);
@@ -928,6 +929,147 @@ namespace Algorithms.Array
             }
 
             return Math.Max(norob, rob);
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/pascals-triangle/description/
+        /// </summary>
+        /// <param name="numRows"></param>
+        /// <returns></returns>
+        public static IList<IList<int>> Generate(int numRows)
+        {
+            var ret = new List<IList<int>>();
+            for (int i = 1; i <= numRows; i++)
+            {
+                var tmp = new List<int>();
+                for (int j = 0; j < i; j++)
+                {
+                    if (j == 0 || j == i - 1) tmp.Add(1);
+                    else
+                    {
+                        tmp.Add(ret[i - 2][j - 1] + ret[i - 2][j]);
+                    }
+                }
+                ret.Add(tmp);
+            }
+
+            return ret;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/maximum-average-subarray-i/description/
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <param name="k"></param>
+        /// <returns></returns>
+        public static double FindMaxAverage(int[] nums, int k)
+        {
+            if (k > nums.Length) return 0;
+
+            int curSum = 0;
+
+            for (int i = 0; i < k; i++)
+            {
+                curSum += nums[i];
+            }
+
+            int max = curSum;
+
+            for (int i = k; i < nums.Length; i++)
+            {
+                curSum = curSum + nums[i] - nums[i - k];
+                max = Math.Max(curSum, max);
+            }
+
+            return max * 1.0 / k;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/pascals-triangle-ii/description/
+        /// </summary>
+        /// <param name="rowIndex"></param>
+        /// <returns></returns>
+        public static IList<int> GetRow(int rowIndex)
+        {
+            var ret = new int[rowIndex + 1];
+            ret[0] = 1;
+            for (int i = 1; i <= rowIndex; i++)
+            {
+                for (int j = i; j > 0; j--)
+                {
+                    if (j == i) ret[j] = 1;
+                    else
+                    {
+                        ret[j] = ret[j] + ret[j - 1];
+                    }
+                }
+            }
+
+            return ret;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/two-sum/description/
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int[] TwoSum(int[] nums, int target)
+        {
+            var dict = new Dictionary<int, int>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (dict.ContainsKey(target - nums[i])) return new int[] { i, dict[target - nums[i]] };
+                else
+                {
+                    if (!dict.ContainsKey(nums[i]))
+                    {
+                        dict.Add(nums[i], i);
+                    }
+                }
+            }
+            return new int[] { 0, 0 };
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/3sum/description/
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public static IList<IList<int>> ThreeSum(int[] nums)
+        {
+            var ret = new List<IList<int>>();
+            Array.Sort(nums);
+            for (int i = 0; i < nums.Length - 2; i++)
+            {
+                if (i == 0 || nums[i] != nums[i - 1])
+                {
+                    var low = i + 1;
+                    var high = nums.Length - 1;
+                    while (low < high)
+                    {
+                        var sum = nums[i] + nums[low] + nums[high];
+                        if (sum == 0)
+                        {
+                            ret.Add(new int[] { nums[i], nums[low], nums[high] });
+                            while (low < high && nums[low] == nums[low + 1]) low++;
+                            while (low < high && nums[high] == nums[high - 1]) high--;
+                            low++;
+                            high--;
+                        }
+                        else if (sum > 0)
+                        {
+                            high--;
+                        }
+                        else
+                        {
+                            low++;
+                        }
+                    }
+                }
+            }
+
+            return ret;
         }
     }
 }
