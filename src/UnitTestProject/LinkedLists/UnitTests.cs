@@ -45,5 +45,36 @@ namespace UnitTestProject.LinkedLists
 
             Assert.AreEqual(node3.val, output.val);
         }
+
+
+        [TestMethod]
+        public void Test_IsPalindrom()
+        {
+            var node1 = new ListNode(1);
+            var node2 = new ListNode(2);
+            var node3 = new ListNode(3);
+            var node2r = new ListNode(2);
+            var node1r = new ListNode(1);
+            node1.next = node2;
+            node2.next = node3;
+            node3.next = node2r;
+            node2r.next = node1r;
+
+            var output = Algorithms.LinkedList.LinkedList.IsPalindrome(node1);
+
+            Assert.AreEqual(true, output);
+
+            node1 = new ListNode(1);
+            node2 = new ListNode(2);
+            node2r = new ListNode(2);
+            node1r = new ListNode(1);
+            node1.next = node2;
+            node2.next = node2r;
+            node2r.next = node1r;
+
+            output = Algorithms.LinkedList.LinkedList.IsPalindrome(node1);
+
+            Assert.AreEqual(true, output);
+        }
     }
 }

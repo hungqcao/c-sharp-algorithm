@@ -482,5 +482,55 @@ namespace Algorithms
 
             return true;
         }
+
+        /// <summary>
+        /// https://leetcode.com/problems/find-all-anagrams-in-a-string/description/
+        /// cbaebabacd
+        /// abc
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public static IList<int> FindAnagrams(string s, string p)
+        {
+            var ret = new List<int>();
+            var stillNeed = new Dictionary<char, int>(); //Meaning if you want to establish an anagram of string p, you still need how many characters
+            foreach (var c in p)
+            {
+                stillNeed.AddOrSet(c, stillNeed.GetValueOrDefault(c, 0) + 1);
+            }
+
+            int counter = stillNeed.Count; // number of unique characters in p
+
+            //start at the beginning
+            int start = 0, end = 0;
+
+            while(end < s.Length)
+            {
+                var endChar = s[end];
+                if (stillNeed.ContainsKey(endChar))
+                {
+                    stillNeed[endChar]--;
+                    if (stillNeed[endChar] == 0) counter--; 
+                }
+                end++;
+                while(counter == 0)
+                {
+                    var startChar = s[start];
+                    if (stillNeed.ContainsKey(s[start]))
+                    {
+                        stillNeed.AddOrSet(startChar, stillNeed.GetValueOrDefault(startChar, 0) + 1);
+                        if (stillNeed[startChar] > 0) counter++;
+                    }
+                    if(end - start == p.Length)
+                    {
+                        ret.Add(start);
+                    }
+                    start++;
+                }
+            }
+
+            return ret;
+        }
     }
 }

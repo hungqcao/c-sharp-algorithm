@@ -8,7 +8,7 @@ namespace Algorithms.LinkedList
 {
     public class LinkedList
     {
-        public ListNode reverse(ListNode head)
+        public static ListNode reverse(ListNode head)
         {
             ListNode current = head;
             ListNode prev = null;
@@ -139,6 +139,37 @@ namespace Algorithms.LinkedList
             }
 
             return tmp;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/palindrome-linked-list/description/
+        /// </summary>
+        /// <param name="head"></param>
+        /// <returns></returns>
+        public static bool IsPalindrome(ListNode head)
+        {
+            if (head == null || head.next == null) return false;
+
+            ListNode slow = head;
+            ListNode fast = head;
+
+            while(fast.next != null && fast.next.next != null)
+            {
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+
+            slow.next = reverse(slow.next);
+            
+            slow = slow.next;
+            while(slow != null)
+            {
+                if (head.val != slow.val) return false;
+                head = head.next;
+                slow = slow.next;
+            }
+
+            return true;
         }
     }
 }

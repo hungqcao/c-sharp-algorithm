@@ -61,5 +61,14 @@ namespace UnitTestProject.Strings
             output = Algorithms.Strings.IsIsomorphic(input1, input2);
             Assert.AreEqual(true, output);
         }
+
+        [TestMethod]
+        public void Test_FindAnagrams()
+        {
+            var input = "dcbdaebabacd";
+            var output = Algorithms.Strings.FindAnagrams(input, "abc");
+
+            Assert.AreEqual(2, output.Count);
+        }
     }
 }

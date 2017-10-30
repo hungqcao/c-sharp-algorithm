@@ -593,6 +593,33 @@ namespace Algorithms.Tree
             LevelOrderBottom(root.right, level + 1, collection);
         }
 
+        /// <summary>
+        /// https://leetcode.com/problems/binary-tree-level-order-traversal/description/
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public static IList<IList<int>> LevelOrder(TreeNode root)
+        {
+            var ret = new List<IList<int>>();
+            var queue = new Queue<TreeNode>();
+            queue.Enqueue(root);
+            while (queue.Any())
+            {
+                var tmp = new List<int>();
+                var count = queue.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    var cur = queue.Dequeue();
+                    tmp.Add(cur.val);
+                    if (cur.left != null) queue.Enqueue(cur.left);
+                    if (cur.right != null) queue.Enqueue(cur.right);
+                }
+                ret.Add(tmp);
+            }
+
+            return ret;
+        }
+
         /// <summary>        
         /// https://leetcode.com/problems/binary-tree-paths/description/
         /// </summary>
@@ -741,6 +768,90 @@ namespace Algorithms.Tree
 
             LocalHelper(root, new List<int>(), sum);
             return ret;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/minimum-depth-of-binary-tree/description/
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public static int MinDepth(TreeNode root)
+        {
+            return MinDepthHelper(root, 0);
+        }
+
+        private static int MinDepthHelper(TreeNode treeNode, int depth)
+        {
+            if (treeNode == null) return depth;
+            int left = MinDepthHelper(treeNode.left, depth);
+            int right = MinDepthHelper(treeNode.right, depth);
+
+            return (left == 0 || right == 0) ? left + right + 1 : Math.Min(left, right) + 1;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/description/
+        /// BFS
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public static IList<IList<int>> ZigzagLevelOrder(TreeNode root)
+        {
+            var ret = new List<IList<int>>();
+            if (root == null) return ret;
+
+            var queue = new Queue<TreeNode>();
+            queue.Enqueue(root);
+
+            var fromRightToLeft = false;
+            while (queue.Any())
+            {
+                var tmp = new List<int>();
+                var count = queue.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    var cur = queue.Dequeue();
+                    if (!fromRightToLeft)
+                    {
+                        tmp.Add(cur.val);
+                    }
+                    else
+                    {
+                        tmp.Insert(0, cur.val);
+                    }
+                    if (cur.left != null) queue.Enqueue(cur.left);
+                    if (cur.right != null) queue.Enqueue(cur.right);
+                }
+                ret.Add(tmp);
+                fromRightToLeft = !fromRightToLeft;
+            }
+
+            return ret;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/longest-univalue-path/description/
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public static int LongestUnivaluePath(TreeNode root)
+        {
+            var res = new int[1];
+            if (root != null) LongestUnivaluePathHelper(root, res);
+            return res[0];
+        }
+
+        private static int LongestUnivaluePathHelper(TreeNode root, int[] res)
+        {
+            int l = root.left != null ? LongestUnivaluePathHelper(root.left, res) : 0;
+            int r = root.right != null ? LongestUnivaluePathHelper(root.right, res) : 0;
+
+            int resl = root.left != null && root.val == root.left.val ? l + 1 : 0;
+            int resr = root.right != null && root.val == root.right.val ? r + 1 : 0;
+
+            res[0] = Math.Max(res[0], resl + resr);
+
+            return Math.Max(resl, resr);
         }
     }
 }
