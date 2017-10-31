@@ -1071,5 +1071,66 @@ namespace Algorithms.ArrayProb
 
             return ret;
         }
+
+        /// <summary>
+        /// https://leetcode.com/problems/contains-duplicate-ii/description/
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <param name="k"></param>
+        /// <returns></returns>
+        public static bool ContainsNearbyDuplicate(int[] nums, int k)
+        {
+            var dict = new Dictionary<int, int>();
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (dict.ContainsKey(nums[i]))
+                {
+                    if (i - dict[nums[i]] <= k) return true;
+                    else dict[nums[i]] = i;
+                }
+                else
+                {
+                    dict.Add(nums[i], i);
+                }
+            }
+
+            return false;
+        }
+
+        private static long getBucketId(long num, long size)
+        {
+            return num < 0 ? num / size - 1 : num / size;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <param name="k"></param>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public static bool ContainsNearbyAlmostDuplicate(int[] nums, int k, int t)
+        {
+            if (nums == null || k < 0 || t < 0) return false;
+
+            int size = t + 1; //t might be 0, division by zero
+            var dict = new Dictionary<long, long>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                long id = getBucketId(nums[i], size);
+                if (dict.ContainsKey(id)) return true;
+                else if (dict.ContainsKey(id + 1) && Math.Abs(dict[id + 1] - nums[i]) <= t) return true;
+                else if (dict.ContainsKey(id - 1) && Math.Abs(dict[id - 1] - nums[i]) <= t) return true;
+
+                dict.Add(id ,nums[i]);
+                if(i >= k)
+                {
+                    dict.Remove(getBucketId(nums[i - k], size));
+                }
+            }
+
+            return false;
+        }
     }
 }

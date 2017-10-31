@@ -171,5 +171,21 @@ namespace Algorithms.LinkedList
 
             return true;
         }
+
+        /// <summary>
+        /// https://leetcode.com/problems/remove-linked-list-elements/description/
+        /// </summary>
+        /// <param name="head"></param>
+        /// <param name="val"></param>
+        /// <returns></returns>
+        public static ListNode RemoveElements(ListNode head, int val)
+        {
+            if (head == null) return null;
+
+            head.next = RemoveElements(head.next, val);
+
+            if (head.val == val) return head.next;
+            else return head;
+        }
     }
 }

@@ -64,5 +64,14 @@ namespace UnitTestProject.Arrays
             var output = Algorithms.ArrayProb.Arrays.ThreeSum(new int[] { -1, 0, 1, 2, -1, -4 });
             Assert.AreEqual(output.Count, 2);
         }
+
+        [TestMethod]
+        public void Test_ContainsNearbyAlmostDuplicate()
+        {
+            var output = Algorithms.ArrayProb.Arrays.ContainsNearbyAlmostDuplicate(new int[] { -2147483648, -2147483647 }, 3, 3);
+            Assert.AreEqual(true, output);
+            output = Algorithms.ArrayProb.Arrays.ContainsNearbyAlmostDuplicate(new int[] { -3, 3 }, 2, 4);
+            Assert.AreEqual(true, output);
+        }
     }
 }
