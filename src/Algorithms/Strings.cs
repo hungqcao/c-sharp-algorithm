@@ -532,5 +532,135 @@ namespace Algorithms
 
             return ret;
         }
+
+        /// <summary>
+        /// https://leetcode.com/problems/valid-palindrome-ii/description/
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static bool ValidPalindrome(string s)
+        {
+            if (s == null) return false;
+
+            int i = 0;
+            int j = s.Length - 1;
+            
+            while(i < j)
+            {
+                if(s[i] != s[j])
+                {
+                    return IsPalindrome(s, i+1, j) || IsPalindrome(s, i, j -1);
+                }
+                i++;
+                j--;
+            }
+
+            return true;
+        }
+
+        private static bool IsPalindrome(string s, int start, int end)
+        {
+            while(start <= end)
+            {
+                if (s[start] != s[end]) return false;
+                start++;
+                end--;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/longest-common-prefix/description/
+        /// </summary>
+        /// <param name="strs"></param>
+        /// <returns></returns>
+        public static string LongestCommonPrefix(string[] strs)
+        {
+            if (strs == null || strs.Length == 0) return "";
+
+            string pre = strs[0];
+            for (int i = 0; i < strs.Length; i++)
+            {
+                while(strs[i].IndexOf(pre) != 0)
+                {
+                    pre = pre.Substring(0, pre.Length - 1);
+                }
+            }
+
+            return pre;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/multiply-strings/discuss/
+        /// </summary>
+        /// <param name="num1"></param>
+        /// <param name="num2"></param>
+        /// <returns></returns>
+        public static string Multiply(string num1, string num2)
+        {
+            int[] ret = new int[num1.Length + num2.Length];
+            for (int i = num1.Length - 1; i >= 0; i--)
+            {
+                for (int j = num2.Length -1; j >= 0; j--)
+                {
+                    int multiply = (num1[i] - '0') * (num2[j] - '0');
+                    int p1 = i + j, p2 = i + j + 1;
+                    int sum = multiply + ret[p2];
+
+                    ret[p1] += sum / 10;
+                    ret[p2] = sum % 10;
+                }
+            }
+
+            StringBuilder sb = new StringBuilder();
+            foreach (int p in ret) if (!(sb.Length == 0 && p == 0)) sb.Append(p);
+            return sb.Length == 0 ? "0" : sb.ToString();
+        }
+
+        private static int low = -1;
+        private static int max = 0;
+        /// <summary>
+        /// https://leetcode.com/problems/longest-palindromic-substring/description/
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static string LongestPalindromeSubstring(string s)
+        {
+            low = -1;
+            max = 0;
+            if (s == null) return string.Empty;
+            int len = s.Length;
+            if (len < 2) return s;
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                IsLongestPalindromeHelper(s, i, i);
+                IsLongestPalindromeHelper(s, i, i + 1);
+            }
+
+            return s.Substring(low, max);
+        }
+
+        /// <summary>
+        /// Is plaindrome started from i, j
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="i"></param>
+        /// <param name="j"></param>
+        private static void IsLongestPalindromeHelper(string s, int i, int j)
+        {
+            while(i >= 0 && j < s.Length && s[i] == s[j])
+            {
+                i--;
+                j++;
+            }
+
+            if(max < j - i - 1)
+            {
+                max = j - i - 1;
+                low = i + 1;
+            }
+        }
     }
 }

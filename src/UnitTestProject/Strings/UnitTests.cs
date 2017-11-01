@@ -70,5 +70,34 @@ namespace UnitTestProject.Strings
 
             Assert.AreEqual(2, output.Count);
         }
+
+        [TestMethod]
+        public void Test_IsValidPalindrom2()
+        {
+            var output = Algorithms.Strings.ValidPalindrome("aba");
+            Assert.AreEqual(true, output);
+            output = Algorithms.Strings.ValidPalindrome("abca");
+            Assert.AreEqual(true, output);
+            output = Algorithms.Strings.ValidPalindrome("abaac");
+            Assert.AreEqual(false, output);
+        }
+
+
+        [TestMethod]
+        public void Test_Multiply()
+        {
+            var output = Algorithms.Strings.Multiply("31", "3");
+        }
+
+        [TestMethod]
+        public void Test_LongestPalindromeSubstring()
+        {
+            var output = Algorithms.Strings.LongestPalindromeSubstring("babad");
+            Assert.AreEqual("bab", output);
+            output = Algorithms.Strings.LongestPalindromeSubstring("eabcb");
+            Assert.AreEqual("bcb", output);
+            output = Algorithms.Strings.LongestPalindromeSubstring("abb");
+            Assert.AreEqual("bb", output);
+        }
     }
 }

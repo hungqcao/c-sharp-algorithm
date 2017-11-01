@@ -73,5 +73,11 @@ namespace UnitTestProject.Arrays
             output = Algorithms.ArrayProb.Arrays.ContainsNearbyAlmostDuplicate(new int[] { -3, 3 }, 2, 4);
             Assert.AreEqual(true, output);
         }
+
+        [TestMethod]
+        public void Test_TrappingWater()
+        {
+            var output = Algorithms.ArrayProb.Arrays.Trap1(new int[] { 0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 });
+        }
     }
 }

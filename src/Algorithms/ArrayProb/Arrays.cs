@@ -1132,5 +1132,92 @@ namespace Algorithms.ArrayProb
 
             return false;
         }
+
+        /// <summary>
+        /// https://leetcode.com/problems/merge-sorted-array/description/
+        /// </summary>
+        /// <param name="nums1"></param>
+        /// <param name="m"></param>
+        /// <param name="nums2"></param>
+        /// <param name="n"></param>
+        public static void Merge(int[] nums1, int m, int[] nums2, int n)
+        {
+            int i = m - 1;
+            int j = n - 1;
+            int k = m + n - 1;
+
+            while(i >= 0 && j >= 0)
+            {
+                if(nums1[i] > nums2[j])
+                {
+                    nums1[k] = nums1[i];
+                    k--;
+                    i--;
+                } else
+                {
+                    nums1[k] = nums2[j];
+                    k--;
+                    j--;
+                }
+            }
+
+            while(i >= 0)
+            {
+                nums1[k] = nums1[i];
+                k--;
+                i--;
+            }
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/trapping-rain-water/description/
+        /// </summary>
+        /// <param name="height"></param>
+        /// <returns></returns>
+        public static int Trap1(int[] height)
+        {
+            var left = new int[height.Length];
+            var right = new int[height.Length];
+
+            int maxLeft = 0;
+            for (int i = 0; i < height.Length; i++)
+            {
+                if(height[i] >= height[maxLeft])
+                {
+                    left[i] = -1;
+                    maxLeft = i;
+                }
+                else
+                {
+                    left[i] = maxLeft;
+                }
+            }
+
+            int maxRight = height.Length - 1;
+            for (int i = maxRight; i >= 0; i--)
+            {
+                if (height[i] >= height[maxRight])
+                {
+                    right[i] = -1;
+                    maxRight = i;
+                }
+                else
+                {
+                    right[i] = maxRight;
+                }
+            }
+
+            var count = 0;
+            for (int i = 0; i < height.Length; i++)
+            {
+                if(left[i] != -1 && right[i] != -1)
+                {
+                    if(left[i] < right[i])
+                        count += (Math.Min(height[left[i]], height[right[i]]) - height[i]);
+                }
+            }
+
+            return count;
+        }
     }
 }

@@ -187,5 +187,28 @@ namespace Algorithms.LinkedList
             if (head.val == val) return head.next;
             else return head;
         }
+
+        /// <summary>
+        /// https://leetcode.com/problems/intersection-of-two-linked-lists/description/
+        /// sol 1: calculate diff in lengths of them
+        /// sol 2: switch heads
+        /// </summary>
+        /// <param name="headA"></param>
+        /// <param name="headB"></param>
+        /// <returns></returns>
+        public static ListNode GetIntersectionNode(ListNode headA, ListNode headB)
+        {
+            if (headA == null || headB == null) return null;
+            var a = headA;
+            var b = headB;
+
+            while(a != b)
+            {
+                a = a == null ? headB : a.next;
+                b = b == null ? headA : b.next;
+            }
+
+            return a;
+        }
     }
 }

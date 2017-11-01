@@ -76,5 +76,16 @@ namespace UnitTestProject.LinkedLists
 
             Assert.AreEqual(true, output);
         }
+
+        [TestMethod]
+        public void Test_LinkedListIntersection()
+        {
+            var node1 = new ListNode(5);
+            var node2 = new ListNode(2);
+            var node3 = new ListNode(3);
+            node2.next = node3;
+
+            var output = Algorithms.LinkedList.LinkedList.GetIntersectionNode(node1, node2);
+        }
     }
 }
