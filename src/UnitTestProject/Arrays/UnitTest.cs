@@ -79,5 +79,60 @@ namespace UnitTestProject.Arrays
         {
             var output = Algorithms.ArrayProb.Arrays.Trap1(new int[] { 0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 });
         }
+
+        [TestMethod]
+        public void Test_FindUnsortedSubarray()
+        {
+            var output = Algorithms.ArrayProb.Arrays.FindUnsortedSubarray(new int[] { 2, 6, 4, 8, 10, 9, 15 });
+            Assert.AreEqual(5, output);
+
+            output = Algorithms.ArrayProb.Arrays.FindUnsortedSubarray(new int[] { 1, 2, 3, 4 });
+            Assert.AreEqual(5, output);
+        }
+
+        [TestMethod]
+        public void Test_SearchMatrix()
+        {
+            int[,] arr = new int[,]
+            {
+                { 1, 3, 5, 7 },
+                { 10, 11, 16, 20},
+                { 23, 30, 34, 50}
+            };
+
+            var output = Algorithms.ArrayProb.Arrays.SearchMatrix(arr, 11);
+            Assert.AreEqual(true, Algorithms.ArrayProb.Arrays.SearchMatrix(arr, 11));
+            Assert.AreEqual(true, Algorithms.ArrayProb.Arrays.SearchMatrix(arr, 3));
+            Assert.AreEqual(true, Algorithms.ArrayProb.Arrays.SearchMatrix(arr, 50));
+            Assert.AreEqual(true, Algorithms.ArrayProb.Arrays.SearchMatrix(arr, 23));
+            Assert.AreEqual(true, Algorithms.ArrayProb.Arrays.SearchMatrix(arr, 1));
+            arr = new int[,] { { 1 } };
+
+            output = Algorithms.ArrayProb.Arrays.SearchMatrix(arr, 2);
+            Assert.AreEqual(true, output);
+        }
+
+        [TestMethod]
+        public void Test_SearchMatrix2()
+        {
+            int[,] arr = new int[,]
+            {
+                { 1,   4,  7, 11, 15 },
+                { 2,   5,  8, 12, 19},
+                { 3,   6,  9, 16, 22},
+                { 10, 13, 14, 17, 24 },
+                { 18, 21, 23, 26, 30 }
+            };
+            
+            Assert.AreEqual(true, Algorithms.ArrayProb.Arrays.SearchMatrix2(arr, 11));
+            Assert.AreEqual(true, Algorithms.ArrayProb.Arrays.SearchMatrix2(arr, 30));
+            Assert.AreEqual(true, Algorithms.ArrayProb.Arrays.SearchMatrix2(arr, 6));
+            Assert.AreEqual(true, Algorithms.ArrayProb.Arrays.SearchMatrix2(arr, 10));
+            Assert.AreEqual(true, Algorithms.ArrayProb.Arrays.SearchMatrix2(arr, 22));
+
+            arr = new int[,] { { -5 } };
+
+            Assert.AreEqual(false, Algorithms.ArrayProb.Arrays.SearchMatrix2(arr, -10));
+        }
     }
 }

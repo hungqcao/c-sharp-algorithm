@@ -1123,8 +1123,8 @@ namespace Algorithms.ArrayProb
                 else if (dict.ContainsKey(id + 1) && Math.Abs(dict[id + 1] - nums[i]) <= t) return true;
                 else if (dict.ContainsKey(id - 1) && Math.Abs(dict[id - 1] - nums[i]) <= t) return true;
 
-                dict.Add(id ,nums[i]);
-                if(i >= k)
+                dict.Add(id, nums[i]);
+                if (i >= k)
                 {
                     dict.Remove(getBucketId(nums[i - k], size));
                 }
@@ -1146,14 +1146,15 @@ namespace Algorithms.ArrayProb
             int j = n - 1;
             int k = m + n - 1;
 
-            while(i >= 0 && j >= 0)
+            while (i >= 0 && j >= 0)
             {
-                if(nums1[i] > nums2[j])
+                if (nums1[i] > nums2[j])
                 {
                     nums1[k] = nums1[i];
                     k--;
                     i--;
-                } else
+                }
+                else
                 {
                     nums1[k] = nums2[j];
                     k--;
@@ -1161,7 +1162,7 @@ namespace Algorithms.ArrayProb
                 }
             }
 
-            while(i >= 0)
+            while (i >= 0)
             {
                 nums1[k] = nums1[i];
                 k--;
@@ -1182,7 +1183,7 @@ namespace Algorithms.ArrayProb
             int maxLeft = 0;
             for (int i = 0; i < height.Length; i++)
             {
-                if(height[i] >= height[maxLeft])
+                if (height[i] >= height[maxLeft])
                 {
                     left[i] = -1;
                     maxLeft = i;
@@ -1210,14 +1211,97 @@ namespace Algorithms.ArrayProb
             var count = 0;
             for (int i = 0; i < height.Length; i++)
             {
-                if(left[i] != -1 && right[i] != -1)
+                if (left[i] != -1 && right[i] != -1)
                 {
-                    if(left[i] < right[i])
+                    if (left[i] < right[i])
                         count += (Math.Min(height[left[i]], height[right[i]]) - height[i]);
                 }
             }
 
             return count;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/shortest-unsorted-continuous-subarray/description/
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public static int FindUnsortedSubarray(int[] nums)
+        {
+            var len = nums.Length;
+            int start = -1, end = -2, max = nums[0], min = nums[len - 1];
+            for (int i = 0; i < nums.Length; i++)
+            {
+                max = Math.Max(max, nums[i]);
+                min = Math.Min(min, nums[len - i - 1]);
+                if (nums[i] < max) end = i;
+
+                if (nums[len - i - 1] > min) start = len - i - 1;
+            }
+
+            return end - start + 1;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/search-a-2d-matrix/description/
+        /// </summary>
+        /// <param name="matrix"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static bool SearchMatrix(int[,] matrix, int target)
+        {
+            if (matrix == null || matrix.Length == 0) return false;
+            
+            int colLen = matrix.GetUpperBound(1) + 1;
+
+            int i = 0, j = matrix.Length;
+
+            while(i < j)
+            {
+                int mid = (i + j) / 2;
+                if (matrix[mid / colLen, mid % colLen] > target)
+                {
+                    j = mid - 1;
+                }
+                else if (matrix[mid / colLen, mid % colLen] < target)
+                {
+                    i = mid + 1;
+                }
+                else return true;
+            }
+
+            if (i / colLen > matrix.GetUpperBound(0) || i % colLen > matrix.GetUpperBound(1)) return false;
+
+            return matrix[i / colLen, i % colLen] == target;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/search-a-2d-matrix-ii/description/
+        /// </summary>
+        /// <param name="matrix"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static bool SearchMatrix2(int[,] matrix, int target)
+        {
+            if (matrix == null || matrix.Length == 0) return false;
+
+            int col = matrix.GetUpperBound(1);
+            int row = 0;
+
+            while(row <= matrix.GetUpperBound(0) && col >= 0)
+            {
+                if (matrix[row, col] > target)
+                {
+                    col--;
+                }
+                else if (matrix[row, col] < target)
+                {
+                    row++;
+                }
+                else return true;
+            }
+
+            return false;
         }
     }
 }
