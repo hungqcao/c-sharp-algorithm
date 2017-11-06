@@ -99,5 +99,19 @@ namespace UnitTestProject.Strings
             output = Algorithms.Strings.LongestPalindromeSubstring("abb");
             Assert.AreEqual("bb", output);
         }
+
+        [TestMethod]
+        public void Test_CountSubstrings()
+        {
+            Assert.AreEqual(6, Algorithms.Strings.CountSubstrings("aaa"));
+            Assert.AreEqual(6, Algorithms.Strings.CountSubstrings("fdsklf"));
+            Assert.AreEqual(3, Algorithms.Strings.CountSubstrings("abc"));
+        }
+
+        [TestMethod]
+        public void Test_FrequencySort()
+        {
+            Assert.AreEqual("eert", Algorithms.Strings.FrequencySort("tree"));
+        }
     }
 }

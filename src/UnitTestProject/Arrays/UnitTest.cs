@@ -134,5 +134,45 @@ namespace UnitTestProject.Arrays
 
             Assert.AreEqual(false, Algorithms.ArrayProb.Arrays.SearchMatrix2(arr, -10));
         }
+
+        [TestMethod]
+        public void Test_CheckPossibility()
+        {
+            Assert.AreEqual(true, Algorithms.ArrayProb.Arrays.CheckPossibility(new int[] { 3, 1, 2, 3, 4 }));
+            Assert.AreEqual(true, Algorithms.ArrayProb.Arrays.CheckPossibility(new int[] { 1, 2, 3, 4 }));
+            Assert.AreEqual(false, Algorithms.ArrayProb.Arrays.CheckPossibility(new int[] { 4, 2, 1 }));
+            Assert.AreEqual(false, Algorithms.ArrayProb.Arrays.CheckPossibility(new int[] { 5, 4, 3, 3, 4 }));
+            Assert.AreEqual(false, Algorithms.ArrayProb.Arrays.CheckPossibility(new int[] { 3, 4, 2, 3 }));
+        }
+
+        [TestMethod]
+        public void Test_FindLength()
+        {
+            var A = new int[] { 1, 2, 3, 2, 1 };
+            var B = new int[] { 3, 2, 1, 4, 7 };
+
+            Assert.AreEqual(3, Algorithms.ArrayProb.Arrays.FindLength(A, B));
+        }
+
+        [TestMethod]
+        public void Test_FindDupplicates()
+        {
+            var A = new int[] { 4, 3, 2, 7, 8, 2, 3, 1 };
+            var output = Algorithms.ArrayProb.Arrays.FindDupplicates(A);
+
+            Assert.AreEqual(2, output.Count);
+        }
+
+        [TestMethod]
+        public void Test_CountArrangement()
+        {
+            Assert.AreEqual(2, Algorithms.ArrayProb.Arrays.CountArrangement(2));
+        }
+
+        [TestMethod]
+        public void Test_SingleNumber()
+        {
+            Assert.AreEqual(2, Algorithms.ArrayProb.Arrays.SingleNumber(new int[] { 1, 2, 1, 3, 2, 5 }).Length);
+        }
     }
 }

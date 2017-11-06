@@ -128,5 +128,40 @@ namespace UnitTestProject.Tree
             var result = Algorithms.Tree.BinaryTreeProblems.ZigzagLevelOrder(node1);
             Assert.AreEqual(result.Count, 3);
         }
+
+        [TestMethod]
+        public void Test_ConstructMaximumBinaryTree()
+        {
+            var node = Algorithms.Tree.BinaryTreeProblems.ConstructMaximumBinaryTree(new int[] { 3, 2, 1, 6, 0, 5 });
+        }
+
+        [TestMethod]
+        public void Test_LargestValues()
+        {
+            var node1 = new TreeNode(1);
+            var node2 = new TreeNode(2);
+            var node3 = new TreeNode(3);
+            var node5 = new TreeNode(5);
+
+            node1.left = node2;
+            node1.right = node3;
+            node2.right = node5;
+
+            var result = Algorithms.Tree.BinaryTreeProblems.LargestValues(node1);
+            Assert.AreEqual(result.Count, 3);
+        }
+
+        [TestMethod]
+        public void Test_FindFrequentTreeSum()
+        {
+
+            var node1 = new TreeNode(2);
+            var node2 = new TreeNode(5);
+            var node3 = new TreeNode(-3);
+            node2.left = node1;
+            node2.right = node3;
+
+            Assert.AreEqual(1, Algorithms.Tree.BinaryTreeProblems.FindFrequentTreeSum(node2));
+        }
     }
 }

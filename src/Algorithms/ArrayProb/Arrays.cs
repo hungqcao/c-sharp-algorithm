@@ -846,7 +846,7 @@ namespace Algorithms.ArrayProb
         }
 
         /// <summary>
-        /// 
+        /// https://leetcode.com/problems/find-the-duplicate-number/description/
         /// </summary>
         /// <param name="nums"></param>
         /// <returns></returns>
@@ -1302,6 +1302,159 @@ namespace Algorithms.ArrayProb
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/non-decreasing-array/description/
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public static bool CheckPossibility(int[] nums)
+        {
+            int prev = nums[0];
+            int countFail = 0;
+            for (int i = 1; i < nums.Length; i++)
+            {
+                if (prev <= nums[i])
+                {
+                    prev = nums[i];
+                }
+                else
+                {
+                    if (i >= 2 && nums[i - 2] > nums[i])
+                    {
+                        prev = nums[i - 1];
+                    }
+                    else
+                    {
+                        prev = nums[i];
+                    }
+                    countFail++;
+                    if (countFail > 1) return false;
+                }
+            }
+
+            return true;
+
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/maximum-length-of-repeated-subarray/description/
+        /// </summary>
+        /// <param name="A"></param>
+        /// <param name="B"></param>
+        /// <returns></returns>
+        public static int FindLength(int[] A, int[] B)
+        {
+            int max = 0;
+            int[,] dp = new int[A.Length + 1, B.Length + 1];
+
+            for (int i = 0; i < dp.GetLength(0); i++)
+            {
+                for (int j = 0; j < dp.GetLength(1); j++)
+                {
+                    if (i == 0 || j == 0) dp[i, j] = 0;
+                    else
+                    {
+                        if(A[i -1]== B[j - 1])
+                        {
+                            dp[i, j] = dp[i - 1, j - 1] + 1;
+                            max = Math.Max(dp[i, j], max);
+                        }
+                        else
+                        {
+                            dp[i, j] = 0;
+                        }
+                    }
+                }
+            }
+
+            return max;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/find-all-duplicates-in-an-array/description/
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public static IList<int> FindDupplicates(int[] nums)
+        {
+            var ret = new List<int>();
+            if (nums.Length == 0 || nums == null) return ret;
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (nums[Math.Abs(nums[i]) - 1] < 0) ret.Add(Math.Abs(nums[i]));
+                else
+                {
+                    nums[Math.Abs(nums[i]) - 1] = -nums[Math.Abs(nums[i]) - 1];
+                }
+            }
+
+            return ret;
+
+        }
+
+
+        private static int ArrangementCount = 0;
+        /// <summary>
+        /// https://leetcode.com/problems/beautiful-arrangement/description/
+        /// </summary>
+        /// <param name="N"></param>
+        /// <returns></returns>
+        public static int CountArrangement(int N)
+        {
+            CountArrangementHelper(N, 1, new int[N + 1]);
+            return ArrangementCount;
+        }
+
+        private static void CountArrangementHelper(int N, int cur, int[] used)
+        {
+            if(cur > N)
+            {
+                ArrangementCount++;
+                return;
+            }
+
+            for (int i = 1; i <= N; i++)
+            {
+                 if(used[i] == 0 && (i % cur == 0 || cur % i == 0))
+                {
+                    used[i] = 1;
+                    CountArrangementHelper(N, cur + 1, used);
+                    used[i] = 0;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public static int[] SingleNumber(int[] nums)
+        {
+            int[] ret = new int[2];
+            int mask = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                mask ^= nums[i];
+            }
+            mask &= -mask; //get last (right most 1), we can pick any 1 in mask
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if((nums[i] & mask) == 0)
+                {
+                    ret[0] ^= nums[i];
+                }
+                else
+                {
+                    ret[1] ^= nums[i];
+                }
+            }
+
+            return ret;
         }
     }
 }

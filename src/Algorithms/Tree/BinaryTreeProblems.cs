@@ -853,5 +853,130 @@ namespace Algorithms.Tree
 
             return Math.Max(resl, resr);
         }
+
+        /// <summary>
+        /// https://leetcode.com/problems/maximum-binary-tree/description/
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public static TreeNode ConstructMaximumBinaryTree(int[] nums)
+        {
+            var stack = new Stack<TreeNode>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                var cur = new TreeNode(nums[i]);
+                while(stack.Any() && stack.Peek().val < cur.val)
+                {
+                    var pop = stack.Pop();
+                    cur.left = pop;
+                }
+                if (stack.Any())
+                {
+                    stack.Peek().right = cur;
+                }
+
+                stack.Push(cur);
+            }
+
+            while (stack.Any())
+            {
+                var pop = stack.Pop();
+                if (!stack.Any()) return pop;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/find-largest-value-in-each-tree-row/description/
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public static IList<int> LargestValues(TreeNode root)
+        {
+            var ret = new List<int>();
+            if (root == null) return ret;
+             var queue = new Queue<TreeNode>();
+            queue.Enqueue(root);
+            while (queue.Any())
+            {
+                int max = int.MinValue;
+                var size = queue.Count;
+                for (int i = 0; i < size; i++)
+                {
+                    var item = queue.Dequeue();
+                    max = Math.Max(max, item.val);
+                    if (item.left != null) queue.Enqueue(item.left);
+                    if (item.right != null) queue.Enqueue(item.right);
+                }
+                ret.Add(max);
+            }
+
+            return ret;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/find-bottom-left-tree-value/description/
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public static int FindBottomLeftValue(TreeNode root)
+        {
+            var queue = new Queue<TreeNode>();
+            TreeNode item = null;
+            queue.Enqueue(root);
+            while (queue.Any())
+            {
+                var size = queue.Count;
+                for (int i = 0; i < size; i++)
+                {
+                     item = queue.Dequeue();
+                    if (item.right != null) queue.Enqueue(item.right);
+                    if (item.left != null) queue.Enqueue(item.left);
+                }
+            }
+
+            return item.val;
+        }
+
+        private static Dictionary<int, int> frequenTreeSums;
+        private static int max = 0;
+        /// <summary>
+        /// https://leetcode.com/problems/most-frequent-subtree-sum/description/
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public static int[] FindFrequentTreeSum(TreeNode root)
+        {
+            frequenTreeSums = new Dictionary<int, int>();
+            max = 0;
+            FindFrequenTreeSumHelper(root);
+            return frequenTreeSums.Where(_ => _.Value == max).Select(_ => _.Key).ToArray();
+        }
+
+        private static int FindFrequenTreeSumHelper(TreeNode node)
+        {
+            if(node == null)
+            {
+                return 0;
+            }
+
+            var left = FindFrequenTreeSumHelper(node.left);
+            var right = FindFrequenTreeSumHelper(node.right);
+
+            var sum = left + right + node.val;
+            if (frequenTreeSums.ContainsKey(sum))
+            {
+                frequenTreeSums[sum]++;
+            }
+            else
+            {
+                frequenTreeSums.Add(sum, 1);
+            }
+
+            max = Math.Max(max, frequenTreeSums[sum]);
+
+            return sum;
+        }
     }
 }

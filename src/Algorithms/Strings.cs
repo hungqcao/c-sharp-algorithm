@@ -505,16 +505,16 @@ namespace Algorithms
             //start at the beginning
             int start = 0, end = 0;
 
-            while(end < s.Length)
+            while (end < s.Length)
             {
                 var endChar = s[end];
                 if (stillNeed.ContainsKey(endChar))
                 {
                     stillNeed[endChar]--;
-                    if (stillNeed[endChar] == 0) counter--; 
+                    if (stillNeed[endChar] == 0) counter--;
                 }
                 end++;
-                while(counter == 0)
+                while (counter == 0)
                 {
                     var startChar = s[start];
                     if (stillNeed.ContainsKey(s[start]))
@@ -522,7 +522,7 @@ namespace Algorithms
                         stillNeed.AddOrSet(startChar, stillNeed.GetValueOrDefault(startChar, 0) + 1);
                         if (stillNeed[startChar] > 0) counter++;
                     }
-                    if(end - start == p.Length)
+                    if (end - start == p.Length)
                     {
                         ret.Add(start);
                     }
@@ -544,12 +544,12 @@ namespace Algorithms
 
             int i = 0;
             int j = s.Length - 1;
-            
-            while(i < j)
+
+            while (i < j)
             {
-                if(s[i] != s[j])
+                if (s[i] != s[j])
                 {
-                    return IsPalindrome(s, i+1, j) || IsPalindrome(s, i, j -1);
+                    return IsPalindrome(s, i + 1, j) || IsPalindrome(s, i, j - 1);
                 }
                 i++;
                 j--;
@@ -560,7 +560,7 @@ namespace Algorithms
 
         private static bool IsPalindrome(string s, int start, int end)
         {
-            while(start <= end)
+            while (start <= end)
             {
                 if (s[start] != s[end]) return false;
                 start++;
@@ -582,7 +582,7 @@ namespace Algorithms
             string pre = strs[0];
             for (int i = 0; i < strs.Length; i++)
             {
-                while(strs[i].IndexOf(pre) != 0)
+                while (strs[i].IndexOf(pre) != 0)
                 {
                     pre = pre.Substring(0, pre.Length - 1);
                 }
@@ -602,7 +602,7 @@ namespace Algorithms
             int[] ret = new int[num1.Length + num2.Length];
             for (int i = num1.Length - 1; i >= 0; i--)
             {
-                for (int j = num2.Length -1; j >= 0; j--)
+                for (int j = num2.Length - 1; j >= 0; j--)
                 {
                     int multiply = (num1[i] - '0') * (num2[j] - '0');
                     int p1 = i + j, p2 = i + j + 1;
@@ -650,17 +650,124 @@ namespace Algorithms
         /// <param name="j"></param>
         private static void IsLongestPalindromeHelper(string s, int i, int j)
         {
-            while(i >= 0 && j < s.Length && s[i] == s[j])
+            while (i >= 0 && j < s.Length && s[i] == s[j])
             {
                 i--;
                 j++;
             }
 
-            if(max < j - i - 1)
+            if (max < j - i - 1)
             {
                 max = j - i - 1;
                 low = i + 1;
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public static string ConvertToTitle(int n)
+        {
+            return n == 0 ? "" : ConvertToTitle(--n / 26) + (char)('A' + (n % 26));
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/palindromic-substrings/description/
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static int CountSubstrings(string s)
+        {
+            int ret = 0;
+            if (string.IsNullOrWhiteSpace(s)) return ret;
+            for (int i = 0; i < s.Length; i++)
+            {
+                ret += CountHelper(s, i, i) + CountHelper(s, i, i + 1);
+            }
+
+            return ret;
+        }
+
+        private static int CountHelper(string s, int l, int r)
+        {
+            int count = 0;
+            while (l >= 0 && r < s.Length && s[l] == s[r])
+            {
+                count++;
+                l--;
+                r++;
+            }
+
+            return count;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/arithmetic-slices/discuss/
+        /// </summary>
+        /// <param name="A"></param>
+        /// <returns></returns>
+        public static int NumberOfArithmeticSlices(int[] A)
+        {
+            int cur = 0;
+            int sum = 0;
+            for (int i = 2; i < A.Length; i++)
+            {
+                if (A[i - 1] - A[i - 2] == A[i] - A[i - 1])
+                {
+                    cur++;
+                    sum += cur;
+                }
+                else
+                {
+                    cur = 0;
+                }
+            }
+
+            return sum;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/sort-characters-by-frequency/description/
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static string FrequencySort(string s)
+        {
+            var dict = new Dictionary<char, int>();
+            foreach (var c in s)
+            {
+                dict.AddOrSet(c, dict.GetValueOrDefault(c, 0) + 1);
+            }
+
+            var buckets = new IList<char>[s.Length + 1];
+            foreach (var item in dict)
+            {
+                if (buckets[item.Value] == null)
+                {
+                    buckets[item.Value] = new List<char>();
+
+                }
+                buckets[item.Value].Add(item.Key);
+            }
+
+            var ret = new StringBuilder();
+            for (int i = buckets.Length - 1; i >= 0; i--)
+            {
+                if (buckets[i] != null)
+                {
+                    foreach (var item in buckets[i])
+                    {
+                        for (int j = 0; j < i; j++)
+                        {
+                            ret.Append(item);
+                        }
+                    }
+                }
+            }
+
+            return ret.ToString();
         }
     }
 }
