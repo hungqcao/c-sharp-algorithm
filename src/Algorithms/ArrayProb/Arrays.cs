@@ -1456,5 +1456,70 @@ namespace Algorithms.ArrayProb
 
             return ret;
         }
+
+        /// <summary>
+        /// https://leetcode.com/problems/longest-increasing-subsequence/discuss/
+        /// O(N^2) solution
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public static int LengthOfLIS(int[] nums)
+        {
+            if (nums == null || nums.Length == 0) return 0;
+            int[] dp = new int[nums.Length];
+            for (int i = 0; i < dp.Length; i++)
+            {
+                dp[i] = 1;
+            }
+
+            for (int i = 1; i < nums.Length; i++)
+            {
+                for (int j = 0; j < i; j++)
+                {
+                    if(nums[i] > nums[j])
+                    {
+                        dp[i] = Math.Max(dp[i], dp[j] + 1);
+                    }
+                }
+            }
+
+            return dp.Max();
+        }
+
+        /// <summary>
+        /// NLOGN
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public static int LengthOfLIS_BinarySearch(int[] nums)
+        {
+            if (nums == null || nums.Length == 0) return 0;
+            int[] dp = new int[nums.Length];
+            int size = 0;
+            foreach (var item in nums)
+            {
+                int i = 0, j = size;
+                while (i != j)
+                {
+                    int mid = (i + j) / 2;
+                    if(dp[mid] < item)
+                    {
+                        i = mid + 1;
+                    }
+                    else
+                    {
+                        j = mid;
+                    }
+                }
+                dp[i] = item;
+                if (i == size) size++;
+            }
+
+            return size;
+        }
+        //https://leetcode.com/problems/increasing-triplet-subsequence/description/
+        //https://leetcode.com/problems/maximum-length-of-pair-chain/description/
+        //https://leetcode.com/problems/number-of-longest-increasing-subsequence/description/
+        //https://leetcode.com/problems/delete-operation-for-two-strings/description/
     }
 }

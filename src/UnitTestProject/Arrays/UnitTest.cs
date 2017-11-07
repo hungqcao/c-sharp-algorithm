@@ -174,5 +174,14 @@ namespace UnitTestProject.Arrays
         {
             Assert.AreEqual(2, Algorithms.ArrayProb.Arrays.SingleNumber(new int[] { 1, 2, 1, 3, 2, 5 }).Length);
         }
+
+        [TestMethod]
+        public void Test_LengthOfLIS()
+        {
+            Assert.AreEqual(4, Algorithms.ArrayProb.Arrays.LengthOfLIS(new int[] { 10, 9, 2, 5, 3, 7, 101, 18 }));
+            Assert.AreEqual(6, Algorithms.ArrayProb.Arrays.LengthOfLIS(new int[] { 1, 3, 6, 7, 9, 4, 10, 5, 6 }));
+            Assert.AreEqual(4, Algorithms.ArrayProb.Arrays.LengthOfLIS_BinarySearch(new int[] { 10, 9, 2, 5, 3, 7, 101, 18 }));
+            Assert.AreEqual(6, Algorithms.ArrayProb.Arrays.LengthOfLIS_BinarySearch(new int[] { 1, 3, 6, 7, 9, 4, 10, 5, 6 }));
+        }
     }
 }
