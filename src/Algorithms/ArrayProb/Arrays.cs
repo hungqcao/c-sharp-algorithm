@@ -1251,12 +1251,12 @@ namespace Algorithms.ArrayProb
         public static bool SearchMatrix(int[,] matrix, int target)
         {
             if (matrix == null || matrix.Length == 0) return false;
-            
+
             int colLen = matrix.GetUpperBound(1) + 1;
 
             int i = 0, j = matrix.Length;
 
-            while(i < j)
+            while (i < j)
             {
                 int mid = (i + j) / 2;
                 if (matrix[mid / colLen, mid % colLen] > target)
@@ -1288,7 +1288,7 @@ namespace Algorithms.ArrayProb
             int col = matrix.GetUpperBound(1);
             int row = 0;
 
-            while(row <= matrix.GetUpperBound(0) && col >= 0)
+            while (row <= matrix.GetUpperBound(0) && col >= 0)
             {
                 if (matrix[row, col] > target)
                 {
@@ -1356,7 +1356,7 @@ namespace Algorithms.ArrayProb
                     if (i == 0 || j == 0) dp[i, j] = 0;
                     else
                     {
-                        if(A[i -1]== B[j - 1])
+                        if (A[i - 1] == B[j - 1])
                         {
                             dp[i, j] = dp[i - 1, j - 1] + 1;
                             max = Math.Max(dp[i, j], max);
@@ -1410,7 +1410,7 @@ namespace Algorithms.ArrayProb
 
         private static void CountArrangementHelper(int N, int cur, int[] used)
         {
-            if(cur > N)
+            if (cur > N)
             {
                 ArrangementCount++;
                 return;
@@ -1418,7 +1418,7 @@ namespace Algorithms.ArrayProb
 
             for (int i = 1; i <= N; i++)
             {
-                 if(used[i] == 0 && (i % cur == 0 || cur % i == 0))
+                if (used[i] == 0 && (i % cur == 0 || cur % i == 0))
                 {
                     used[i] = 1;
                     CountArrangementHelper(N, cur + 1, used);
@@ -1444,7 +1444,7 @@ namespace Algorithms.ArrayProb
 
             for (int i = 0; i < nums.Length; i++)
             {
-                if((nums[i] & mask) == 0)
+                if ((nums[i] & mask) == 0)
                 {
                     ret[0] ^= nums[i];
                 }
@@ -1476,7 +1476,7 @@ namespace Algorithms.ArrayProb
             {
                 for (int j = 0; j < i; j++)
                 {
-                    if(nums[i] > nums[j])
+                    if (nums[i] > nums[j])
                     {
                         dp[i] = Math.Max(dp[i], dp[j] + 1);
                     }
@@ -1502,7 +1502,7 @@ namespace Algorithms.ArrayProb
                 while (i != j)
                 {
                     int mid = (i + j) / 2;
-                    if(dp[mid] < item)
+                    if (dp[mid] < item)
                     {
                         i = mid + 1;
                     }
@@ -1564,9 +1564,9 @@ namespace Algorithms.ArrayProb
             {
                 for (int j = 0; j < i; j++)
                 {
-                    if(nums[i] > nums[j])
+                    if (nums[i] > nums[j])
                     {
-                        if(dp[i] == dp[j] + 1)
+                        if (dp[i] == dp[j] + 1)
                         {
                             count[i] += count[j];
                         }
@@ -1579,12 +1579,12 @@ namespace Algorithms.ArrayProb
                     }
                 }
 
-                if(dp[i] == maxLen)
+                if (dp[i] == maxLen)
                 {
                     res += count[i];
                 }
 
-                if(dp[i] > maxLen)
+                if (dp[i] > maxLen)
                 {
                     maxLen = dp[i];
                     res = count[i];
@@ -1593,5 +1593,94 @@ namespace Algorithms.ArrayProb
 
             return res;
         }
+
+        /// <summary>
+        /// https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/description/
+        /// </summary>
+        /// <param name="prices"></param>
+        /// <returns></returns>
+        public static int MaxProfit(int[] prices)
+        {
+            int buy = int.MinValue, sell = 0, prev_sell = 0, prev_buy = 0;
+            foreach (var item in prices)
+            {
+                prev_buy = buy;
+                buy = Math.Max(prev_sell - item, prev_buy);
+                prev_sell = sell;
+                sell = Math.Max(prev_buy + item, prev_sell);
+            }
+
+            return Math.Max(buy, sell);
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/next-greater-element-ii/description/
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public static int[] NextGreaterElements(int[] nums)
+        {
+            int[] next = new int[nums.Length];
+            for (int i = 0; i < nums.Length; i++)
+            {
+                next[i] = -1;
+            }
+            Stack<int> stack = new Stack<int>();
+            for (int i = 0; i < nums.Length * 2; i++)
+            {
+                var num = nums[i % nums.Length];
+                while (stack.Any() && nums[stack.Peek()] < num)
+                {
+                    next[stack.Pop()] = num;
+                }
+                if (i < nums.Length) stack.Push(i);
+            }
+            return next;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="A"></param>
+        /// <param name="B"></param>
+        /// <param name="C"></param>
+        /// <param name="D"></param>
+        /// <returns></returns>
+        public static int FourSumCount(int[] A, int[] B, int[] C, int[] D)
+        {
+            Dictionary<int, int> dict1 = new Dictionary<int, int>();
+
+            foreach (var a in A)
+            {
+                foreach (var b in B)
+                {
+                    var sum = a + b;
+                    if (dict1.ContainsKey(sum))
+                    {
+                        dict1[sum]++;
+                    }
+                    else
+                    {
+                        dict1.Add(sum, 1);
+                    }
+                }
+            }
+            int ret = 0;
+            foreach (var c in C)
+            {
+                foreach (var d in D)
+                {
+                    var sum = c + d;
+                    if(dict1.ContainsKey(-1 * sum))
+                    {
+                        ret += dict1[-1 * sum];
+                    }
+                }
+            }
+
+            return ret;
+        }
+
+        //https://leetcode.com/problems/add-one-row-to-tree/description/
     }
 }

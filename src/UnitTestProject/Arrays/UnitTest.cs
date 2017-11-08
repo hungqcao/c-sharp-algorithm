@@ -197,5 +197,11 @@ namespace UnitTestProject.Arrays
             Assert.AreEqual(5, Algorithms.ArrayProb.Arrays.FindNumberOfLIS(new int[] { 2, 2, 2, 2, 2 }));
             Assert.AreEqual(3, Algorithms.ArrayProb.Arrays.FindNumberOfLIS(new int[] { 1, 2, 4, 3, 5, 4, 7, 2 }));
         }
+
+        [TestMethod]
+        public void Test_NextGreaterElements()
+        {
+            CollectionAssert.AreEquivalent(new int[] { 120, 11, 120, 120, 123, 123, -1, 100, 100, 100 }, Algorithms.ArrayProb.Arrays.NextGreaterElements(new int[] { 100, 1, 11, 1, 120, 111, 123, 1, -1, -100 }));
+        }
     }
 }

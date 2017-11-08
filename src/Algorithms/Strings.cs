@@ -835,8 +835,6 @@ namespace Algorithms
             }
 
             return dp[word1.Length, word2.Length];
-        }
-
-        //https://discuss.leetcode.com/topic/30421/share-my-thinking-process
+        }        
     }
 }
