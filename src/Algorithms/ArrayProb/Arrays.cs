@@ -1517,9 +1517,81 @@ namespace Algorithms.ArrayProb
 
             return size;
         }
-        //https://leetcode.com/problems/increasing-triplet-subsequence/description/
-        //https://leetcode.com/problems/maximum-length-of-pair-chain/description/
-        //https://leetcode.com/problems/number-of-longest-increasing-subsequence/description/
-        //https://leetcode.com/problems/delete-operation-for-two-strings/description/
+
+        /// <summary>
+        /// https://leetcode.com/problems/increasing-triplet-subsequence/description/
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public static bool IncreasingTriplet(int[] nums)
+        {
+            int min = int.MaxValue, mid = int.MaxValue;
+            foreach (var item in nums)
+            {
+                if (item <= min)
+                {
+                    min = item;
+                }
+                else if (item <= mid)
+                {
+                    mid = item;
+                }
+                else return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/number-of-longest-increasing-subsequence/description/
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public static int FindNumberOfLIS(int[] nums)
+        {
+            int[] dp = new int[nums.Length];
+            int[] count = new int[nums.Length];
+
+            for (int i = 0; i < dp.Length; i++)
+            {
+                dp[i] = 1;
+                count[i] = 1;
+            }
+
+            int maxLen = 0;
+            int res = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                for (int j = 0; j < i; j++)
+                {
+                    if(nums[i] > nums[j])
+                    {
+                        if(dp[i] == dp[j] + 1)
+                        {
+                            count[i] += count[j];
+                        }
+
+                        if (dp[i] < dp[j] + 1)
+                        {
+                            count[i] = count[j];
+                        }
+                        dp[i] = Math.Max(dp[i], dp[j] + 1);
+                    }
+                }
+
+                if(dp[i] == maxLen)
+                {
+                    res += count[i];
+                }
+
+                if(dp[i] > maxLen)
+                {
+                    maxLen = dp[i];
+                    res = count[i];
+                }
+            }
+
+            return res;
+        }
     }
 }

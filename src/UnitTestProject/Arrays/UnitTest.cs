@@ -183,5 +183,19 @@ namespace UnitTestProject.Arrays
             Assert.AreEqual(4, Algorithms.ArrayProb.Arrays.LengthOfLIS_BinarySearch(new int[] { 10, 9, 2, 5, 3, 7, 101, 18 }));
             Assert.AreEqual(6, Algorithms.ArrayProb.Arrays.LengthOfLIS_BinarySearch(new int[] { 1, 3, 6, 7, 9, 4, 10, 5, 6 }));
         }
+
+        [TestMethod]
+        public void Test_IncreasingTriplet()
+        {
+            Assert.AreEqual(false, Algorithms.ArrayProb.Arrays.IncreasingTriplet(new int[] { 2, 4, -2, -3 }));
+        }
+
+        [TestMethod]
+        public void Test_FindNumberOfLIS()
+        {
+            Assert.AreEqual(2, Algorithms.ArrayProb.Arrays.FindNumberOfLIS(new int[] { 1, 3, 5, 4, 7 }));
+            Assert.AreEqual(5, Algorithms.ArrayProb.Arrays.FindNumberOfLIS(new int[] { 2, 2, 2, 2, 2 }));
+            Assert.AreEqual(3, Algorithms.ArrayProb.Arrays.FindNumberOfLIS(new int[] { 1, 2, 4, 3, 5, 4, 7, 2 }));
+        }
     }
 }

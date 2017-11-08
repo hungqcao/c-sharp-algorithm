@@ -113,5 +113,17 @@ namespace UnitTestProject.Strings
         {
             Assert.AreEqual("eert", Algorithms.Strings.FrequencySort("tree"));
         }
+
+        [TestMethod]
+        public void Test_MinimumDeleteSum()
+        {
+            Assert.AreEqual(1, Algorithms.Strings.MinimumDeleteSum("eat", "sea"));
+        }
+
+        [TestMethod]
+        public void Test_MinDistance()
+        {
+            Assert.AreEqual(1, Algorithms.Strings.MinDistance("", "a"));
+        }
     }
 }
