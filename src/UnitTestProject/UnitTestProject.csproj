@@ -51,6 +51,7 @@
     <Compile Include="Arrays\UnitTest.cs" />
     <Compile Include="BackTrack\BacktrackTest.cs" />
     <Compile Include="DataStructureTests\MapSumTest.cs" />
+    <Compile Include="DataStructureTests\TextEditorTest.cs" />
     <Compile Include="GraphTests.cs" />
     <Compile Include="LinkedLists\UnitTests.cs" />
     <Compile Include="Strings\UnitTests.cs" />
