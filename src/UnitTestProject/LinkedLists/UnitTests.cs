@@ -87,5 +87,20 @@ namespace UnitTestProject.LinkedLists
 
             var output = Algorithms.LinkedList.LinkedList.GetIntersectionNode(node1, node2);
         }
+
+        [TestMethod]
+        public void Test_AddTwoNumbers()
+        {
+            var node1 = new ListNode(7);
+            node1.next = new ListNode(2);
+            node1.next.next = new ListNode(4);
+            node1.next.next.next = new ListNode(3);
+
+            var node2 = new ListNode(5);
+            node2.next = new ListNode(6);
+            node2.next.next = new ListNode(4);
+
+            var output = Algorithms.LinkedList.LinkedList.AddTwoNumbers(node1, node2);
+        }
     }
 }

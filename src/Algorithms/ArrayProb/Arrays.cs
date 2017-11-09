@@ -1681,6 +1681,37 @@ namespace Algorithms.ArrayProb
             return ret;
         }
 
-        //https://leetcode.com/problems/add-one-row-to-tree/description/
+
+        /// <summary>
+        /// https://leetcode.com/problems/brick-wall/description/
+        /// </summary>
+        /// <param name="wall"></param>
+        /// <returns></returns>
+        public static int LeastBricks(IList<IList<int>> wall)
+        {
+            if (wall == null) return 0;
+
+            int maxEdges = 0;
+            var dict = new Dictionary<int, int>();
+            for (int i = 0; i < wall.Count; i++)
+            {
+                int sum = 0;
+                for (int j = 0; j < wall[i].Count - 1; j++)
+                {
+                    sum += wall[i][j];
+                    if (dict.ContainsKey(sum))
+                    {
+                        dict[sum]++;
+                    }
+                    else
+                    {
+                        dict.Add(sum, 1);
+                    }
+                    maxEdges = Math.Max(maxEdges, dict[sum]);
+                }
+            }
+
+            return wall.Count - maxEdges;
+        }
     }
 }

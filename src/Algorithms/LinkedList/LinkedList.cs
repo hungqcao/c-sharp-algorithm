@@ -210,5 +210,45 @@ namespace Algorithms.LinkedList
 
             return a;
         }
+
+        /// <summary>
+        /// https://leetcode.com/problems/add-two-numbers-ii/description/
+        /// </summary>
+        /// <param name="l1"></param>
+        /// <param name="l2"></param>
+        /// <returns></returns>
+        public static ListNode AddTwoNumbers(ListNode l1, ListNode l2)
+        {
+            Stack<int> s1 = new Stack<int>();
+            Stack<int> s2 = new Stack<int>();
+
+            while (l1 != null)
+            {
+                s1.Push(l1.val);
+                l1 = l1.next;
+            }
+
+            while (l2 != null)
+            {
+                s2.Push(l2.val);
+                l2 = l2.next;
+            }
+
+            int sum = 0;
+            ListNode head = new ListNode(0);
+            while(s1.Any() || s2.Any())
+            {
+                if (s1.Any()) sum += s1.Pop();
+                if (s2.Any()) sum += s2.Pop();
+
+                head.val = sum / 10;
+                var tmp = new ListNode(sum % 10);
+                sum = sum / 10;
+                tmp.next = head.next;
+                head.next = tmp;
+            }
+
+            return head.val == 0 ? head.next : head;
+        }
     }
 }

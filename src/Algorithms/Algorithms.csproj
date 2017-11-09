@@ -49,6 +49,7 @@
     <Compile Include="Backtracking\BackTrackingProblems.cs" />
     <Compile Include="Bit\BitManipulation.cs" />
     <Compile Include="DataStructures\MapSum.cs" />
+    <Compile Include="DP\DynamicProgramming.cs" />
     <Compile Include="Graph\FriendCircleUnionFind.cs" />
     <Compile Include="Graph\Problems.cs" />
     <Compile Include="Graph\UnionFind.cs" />
