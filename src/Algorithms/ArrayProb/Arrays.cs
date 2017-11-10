@@ -1713,5 +1713,97 @@ namespace Algorithms.ArrayProb
 
             return wall.Count - maxEdges;
         }
+
+        /// <summary>
+        /// https://leetcode.com/problems/next-permutation/description/
+        /// </summary>
+        /// <param name="nums"></param>
+        public static void NextPermutation(int[] nums)
+        {
+            int x = -1;
+            for (int i = nums.Length - 2; i >= 0; i--)
+            {
+                if(nums[i] < nums[i + 1])
+                {
+                    x = i;
+                    break;
+                }
+            }
+
+            if (x != -1)
+            {
+                int l = -1;
+                for (int i = nums.Length - 1; i > x; i--)
+                {
+                    if(nums[i] > nums[x])
+                    {
+                        l = i;
+                        break;
+                    }
+                }
+                swap(nums, x, l);
+                reverse(nums, x + 1, nums.Length - 1);
+            }
+            else
+            {
+                Array.Sort(nums);
+            }
+        }
+
+        private static void swap(int[] nums, int x, int l)
+        {
+            var tmp = nums[x];
+            nums[x] = nums[l];
+            nums[l] = tmp;
+        }
+
+        private static void reverse(int[] num, int start, int end)
+        {
+            if (start > end)
+                return;
+            for (int i = start; i <= (end + start) / 2; i++)
+                swap(num, i, start + end - i);
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/permutation-sequence/discuss/
+        /// </summary>
+        /// <param name="n"></param>
+        /// <param name="k"></param>
+        /// <returns></returns>
+        public static string GetPermutation(int n, int k)
+        {
+            List<int> numbers = new List<int>();
+            int[] factorial = new int[n + 1];
+            StringBuilder sb = new StringBuilder();
+
+            // create an array of factorial lookup
+            int sum = 1;
+            factorial[0] = 1;
+            for (int i = 1; i <= n; i++)
+            {
+                sum *= i;
+                factorial[i] = sum;
+            }
+            // factorial[] = {1, 1, 2, 6, 24, ... n!}
+
+            // create a list of numbers to get indices
+            for (int i = 1; i <= n; i++)
+            {
+                numbers.Add(i);
+            }
+
+            k--;
+
+            for (int i = n; i >= 1; i--)
+            {
+                var pos = (k) / factorial[i - 1];
+                sb.Append(numbers[pos]);
+                numbers.RemoveAt(pos);
+                k -= pos * factorial[i - 1];
+            }
+
+            return sb.ToString();
+        }
     }
 }

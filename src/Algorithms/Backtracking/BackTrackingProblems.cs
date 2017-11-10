@@ -80,12 +80,12 @@ namespace Algorithms.Backtracking
 
         private static void PermuteHelper(int[] nums, IList<int> cur, IList<IList<int>> ret)
         {
-            if(cur.Count == nums.Length)
+            if (cur.Count == nums.Length)
             {
                 var tmp = new List<int>(cur);
                 ret.Add(tmp);
                 return;
-            }            
+            }
 
             for (int i = 0; i < nums.Length; i++)
             {
@@ -96,9 +96,146 @@ namespace Algorithms.Backtracking
             }
         }
 
-        //https://leetcode.com/problems/next-permutation/description/
-        //https://leetcode.com/problems/permutations-ii/description/
-        //https://leetcode.com/problems/permutation-sequence/description/
-        //https://leetcode.com/problems/combinations/description/
+        /// <summary>
+        /// https://leetcode.com/problems/permutations-ii/description/
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public static IList<IList<int>> PermuteUnique(int[] nums)
+        {
+            var ret = new List<IList<int>>();
+            Array.Sort(nums);
+            bool[] used = new bool[nums.Length];
+            PermuteUniqueHelper(nums, new List<int>(), used, ret);
+            return ret;
+        }
+        private static void PermuteUniqueHelper(int[] nums, IList<int> cur, bool[] used, IList<IList<int>> ret)
+        {
+            if (cur.Count == nums.Length)
+            {
+                var tmp = new List<int>(cur);
+                ret.Add(tmp);
+                return;
+            }
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (used[i]) continue;
+                if (i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) continue;
+                cur.Add(nums[i]);
+                used[i] = true;
+                PermuteUniqueHelper(nums, cur, used, ret);
+                cur.RemoveAt(cur.Count - 1);
+                used[i] = false;
+            }
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/combinations/description/
+        /// </summary>
+        /// <param name="n"></param>
+        /// <param name="k"></param>
+        /// <returns></returns>
+        public static IList<IList<int>> Combine(int n, int k)
+        {
+            var ret = new List<IList<int>>();
+            var nums = new List<int>();
+            for (int i = 1; i <= n; i++)
+            {
+                nums.Add(i);
+            }
+
+            CombineHelper(nums, new List<int>(), 0, k, ret);
+            return ret;
+        }
+
+        private static void CombineHelper(IList<int> nums, IList<int> cur, int startIndex, int k, IList<IList<int>> ret)
+        {
+            if (cur.Count == k)
+            {
+                var tmp = new List<int>(cur);
+                ret.Add(tmp);
+                return;
+            }
+
+            for (int i = startIndex; i < nums.Count; i++)
+            {
+                cur.Add(nums[i]);
+                CombineHelper(nums, cur, ++startIndex, k, ret);
+                cur.RemoveAt(cur.Count - 1);
+            }
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/combination-sum/description/
+        /// </summary>
+        /// <param name="candidates"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static IList<IList<int>> CombinationSum(int[] candidates, int target)
+        {
+            var ret = new List<IList<int>>();
+            Array.Sort(candidates);
+            CombinationSumHelper(candidates, new List<int>(),0, 0, target, ret);
+            return ret;
+        }
+
+        private static void CombinationSumHelper(int[] nums, IList<int> cur, int startIndex, int curSum, int target, IList<IList<int>> ret)
+        {
+            if (curSum == target)
+            {
+                var tmp = new List<int>(cur);
+                ret.Add(tmp);
+                return;
+            }
+
+            for (int i = startIndex; i < nums.Length; i++)
+            {
+                curSum += nums[i];
+                if (curSum > target) return;
+                cur.Add(nums[i]);
+                CombinationSumHelper(nums, cur, i, curSum, target, ret);
+                curSum -= nums[i];
+                cur.RemoveAt(cur.Count - 1);
+            }
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/combination-sum-ii/description/
+        /// </summary>
+        /// <param name="candidates"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static IList<IList<int>> CombinationSum2(int[] candidates, int target)
+        {
+            var ret = new List<IList<int>>();
+            Array.Sort(candidates);
+            CombinationSum2Helper(candidates, new List<int>(), 0, 0, target, ret);
+            return ret;
+        }
+
+        private static void CombinationSum2Helper(int[] nums, IList<int> cur, int startIndex, int curSum, int target, IList<IList<int>> ret)
+        {
+            if (curSum == target)
+            {
+                var tmp = new List<int>(cur);
+                ret.Add(tmp);
+                return;
+            }
+
+            for (int i = startIndex; i < nums.Length; i++)
+            {
+                if (i > startIndex && nums[i] == nums[i - 1])
+                    continue;
+                curSum += nums[i];
+                if (curSum > target) return;
+                cur.Add(nums[i]);
+                CombinationSumHelper(nums, cur, i+1, curSum, target, ret);
+                curSum -= nums[i];
+                cur.RemoveAt(cur.Count - 1);
+            }
+        }
+
+        //https://leetcode.com/problems/combination-sum-iv/description/
     }
 }

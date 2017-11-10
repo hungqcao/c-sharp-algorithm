@@ -203,5 +203,23 @@ namespace UnitTestProject.Arrays
         {
             CollectionAssert.AreEquivalent(new int[] { 120, 11, 120, 120, 123, 123, -1, 100, 100, 100 }, Algorithms.ArrayProb.Arrays.NextGreaterElements(new int[] { 100, 1, 11, 1, 120, 111, 123, 1, -1, -100 }));
         }
+
+        [TestMethod]
+        public void Test_NextPermutation()
+        {
+            var res = new int[] { 1, 3, 2 };
+            Algorithms.ArrayProb.Arrays.NextPermutation(res);
+            CollectionAssert.AreEqual(new int[] { 2, 1, 3 }, res);
+
+            res = new int[] { 1, 2, 3 };
+            Algorithms.ArrayProb.Arrays.NextPermutation(res);
+            CollectionAssert.AreEqual(new int[] { 1, 3, 2 }, res);
+        }
+
+        [TestMethod]
+        public void Test_GetPermutation()
+        {
+            var res = Algorithms.ArrayProb.Arrays.GetPermutation(3, 2);
+        }
     }
 }
