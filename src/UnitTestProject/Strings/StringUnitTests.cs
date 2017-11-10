@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace UnitTestProject.Strings
 {
     [TestClass]
-    public class UnitTests
+    public class StringUnitTests
     {
         [TestMethod]
         public void TestMethod_JudgeCircle()

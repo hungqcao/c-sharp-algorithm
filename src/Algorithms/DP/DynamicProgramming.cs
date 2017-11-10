@@ -26,5 +26,61 @@ namespace Algorithms.DP
             }
             return dp[op1, op2].Value;
         }
+
+        /// <summary>
+        /// https://leetcode.com/problems/combination-sum-iv/description/
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int CombinationSum4(int[] nums, int target)
+        {
+            // 2,3,5 | 7
+            // Sum 2: [2]
+            // Sum 3: [3]
+            // Sum 5: [2,3] [3,2] [5]
+            // Sum 7: Sum 2 + Sum 3 + Sum 5
+            //int ret = 0;
+            //if (nums == null || nums.Length == 0) return ret;
+
+            //// base case
+            //if (target == 0) return 1;
+
+            //for (int i = 0; i < nums.Length; i++)
+            //{
+            //    if(target >= nums[i])
+            //        ret += CombinationSum4(nums, target - nums[i]);
+            //}
+
+            //return ret;
+
+            // DP
+
+            int ret = 0;
+            if (nums == null || nums.Length == 0) return ret;
+
+            int[] dp = new int[target + 1];
+            dp[0] = 1;
+
+            return CombinationSum4Helper(nums, dp, target);
+        }
+
+        private static int CombinationSum4Helper(int[] nums, int[] dp, int target)
+        {
+            if (target == 0) return dp[0];
+
+            int ret = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if(target >= nums[i])
+                {
+                    ret += CombinationSum4Helper(nums, dp, target - nums[i]);
+                }
+            }
+
+            dp[target] = ret;
+            return ret;
+        }
+
     }
 }

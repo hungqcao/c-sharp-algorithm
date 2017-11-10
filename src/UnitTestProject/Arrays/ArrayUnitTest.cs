@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace UnitTestProject.Arrays
 {
     [TestClass]
-    public class UnitTest
+    public class ArrayUnitTest
     {
         [TestMethod]
         public void TestMethod_FindLengthOfLCIS()

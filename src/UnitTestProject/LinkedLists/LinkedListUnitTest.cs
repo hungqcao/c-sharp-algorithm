@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace UnitTestProject.LinkedLists
 {
     [TestClass]
-    public class UnitTests
+    public class LinkedListUnitTest
     {
         [TestMethod]
         public void TestMethod_CalPoints()
