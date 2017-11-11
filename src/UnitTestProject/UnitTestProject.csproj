@@ -60,6 +60,7 @@
     <Compile Include="Tree\BST.cs" />
     <Compile Include="Numbers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DivideAndConquerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

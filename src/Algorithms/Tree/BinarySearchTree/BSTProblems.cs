@@ -276,5 +276,55 @@ IsCorr1BST  should return true, and print 9.*/
             FindModeHelper(treeNode.right, ret);
         }
 
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public static IList<TreeNode> GenerateTrees(int n)
+        {
+            return GeneratesTreeNodesHelper(1, n);
+        }
+
+        private static IList<TreeNode> GeneratesTreeNodesHelper(int start, int end)
+        {
+            IList<TreeNode> nodes = new List<TreeNode>();
+            
+            if(start > end)
+            {
+                nodes.Add(null);
+                return nodes;
+            }
+
+            if(end == start)
+            {
+                nodes.Add(new TreeNode(start));
+                return nodes;
+            }
+
+            for (int i = start; i <= end; i++)
+            {
+                var lefts = GeneratesTreeNodesHelper(start, i - 1);
+                var rights = GeneratesTreeNodesHelper(i + 1, end);
+                foreach (var left in lefts)
+                {
+                    foreach (var right in rights)
+                    {
+                        var node = new TreeNode(i);
+                        node.left = left;
+                        node.right = right;
+                        nodes.Add(node);
+                    }
+                }
+            }
+
+
+            return nodes;
+        }
+
+        //https://leetcode.com/problems/unique-binary-search-trees/discuss/
+
     }
 }

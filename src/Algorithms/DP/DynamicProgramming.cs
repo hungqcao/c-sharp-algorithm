@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Algorithms.Tree;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -82,5 +83,14 @@ namespace Algorithms.DP
             return ret;
         }
 
+        /// <summary>
+        /// https://leetcode.com/problems/unique-binary-search-trees/description/
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public static int NumTrees(int n)
+        {
+
+        }
     }
 }

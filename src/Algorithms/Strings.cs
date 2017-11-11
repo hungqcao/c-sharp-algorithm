@@ -835,6 +835,6 @@ namespace Algorithms
             }
 
             return dp[word1.Length, word2.Length];
-        }        
+        }
     }
 }
