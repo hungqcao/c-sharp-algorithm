@@ -221,5 +221,31 @@ namespace UnitTestProject.Arrays
         {
             var res = Algorithms.ArrayProb.Arrays.GetPermutation(3, 2);
         }
+
+        [TestMethod]
+        public void Test_SubarraySum()
+        {
+            Assert.AreEqual(3, Algorithms.ArrayProb.Arrays.SubarraySum(new int[] { 1, 1, 1, 1, 1 }, 3));
+        }
+
+        [TestMethod]
+        public void Test_FindMinArrowShots()
+        {
+            int[,] arr = new int[,]
+            {
+                { 10, 16 },
+                { 2, 8},
+                { 1,   6},
+                { 7, 12}                
+            };
+
+            Assert.AreEqual(2, Algorithms.ArrayProb.Arrays.FindMinArrowShots(arr));
+        }
+
+        [TestMethod]
+        public void Test_LeastInterval()
+        {
+            Assert.AreEqual(8, Algorithms.ArrayProb.Arrays.LeastInterval(new char[] { 'A', 'A', 'B', 'A', 'B', 'B' }, 2));
+        }
     }
 }

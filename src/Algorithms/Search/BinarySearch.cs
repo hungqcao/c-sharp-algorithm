@@ -179,7 +179,33 @@ namespace Algorithms.Search
             return false;
         }
 
-        //https://leetcode.com/problems/is-subsequence/description/
-        //https://leetcode.com/problems/subarray-sum-equals-k/description/
+        /// <summary>
+        /// https://leetcode.com/problems/is-subsequence/description/
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public static bool IsSubsequence(string s, string t)
+        {
+            List<int>[] idx = new List<int>[256]; // Just for clarity
+            for (int i = 0; i < t.Length; i++)
+            {
+                if (idx[t[i]] == null)
+                    idx[t[i]] = new List<int>();
+                idx[t[i]].Add(i);
+            }
+
+            int prev = 0;
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (idx[s[i]] == null) return false; // Note: char of S does NOT exist in T causing NPE
+                int j = Array.BinarySearch(idx[s[i]].ToArray(), prev);
+                if (j < 0) j = -j - 1;
+                if (j == idx[s[i]].Count) return false;
+                prev = idx[s[i]][j] + 1;
+            }
+            return true;
+        }
+        
     }
 }

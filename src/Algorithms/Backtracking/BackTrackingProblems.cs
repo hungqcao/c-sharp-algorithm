@@ -235,5 +235,29 @@ namespace Algorithms.Backtracking
                 cur.RemoveAt(cur.Count - 1);
             }
         }
+
+        /// <summary>
+        /// https://leetcode.com/problems/subsets/description/
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public static IList<IList<int>> Subsets(int[] nums)
+        {
+            var ret = new List<IList<int>>();
+            Array.Sort(nums);
+            SubsetsHelper(nums, new List<int>(), 0, ret);
+            return ret;
+        }
+
+        private static void SubsetsHelper(int[] nums, IList<int> tmp, int start, IList<IList<int>> ret)
+        {
+            ret.Add(new List<int>(tmp));
+            for (int i = start; i < nums.Length; i++)
+            {
+                tmp.Add(nums[i]);
+                SubsetsHelper(nums, tmp, i + 1, ret);
+                tmp.RemoveAt(nums.Length - 1);
+            }
+        }
     }
 }

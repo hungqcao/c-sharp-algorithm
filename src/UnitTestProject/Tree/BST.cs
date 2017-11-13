@@ -79,5 +79,18 @@ namespace UnitTestProject.Tree
             output = Algorithms.Tree.BinarySearchTree.BSTProblems.FindMode(node1);
             Assert.AreEqual(new int[] { 2, 1 }, output);
         }
+
+        [TestMethod]
+        public void Test_Serialize_Deserialize()
+        {
+            var node1 = new TreeNode(5);
+            node1.left = new TreeNode(3);
+            node1.left.left = new TreeNode(2);
+            node1.right = new TreeNode(6);
+            node1.right.right = new TreeNode(7);
+
+            var output = Algorithms.Tree.BinarySearchTree.BSTProblems.serialize(node1);
+            var deserialize = Algorithms.Tree.BinarySearchTree.BSTProblems.deserialize(output);
+        }
     }
 }

@@ -37,5 +37,12 @@ namespace UnitTestProject.Search
         {
             Assert.AreEqual(true, BinarySearch.SearchAllowDupp(new int[] { 3, 1 }, 1));
         }
+
+        [TestMethod]
+        public void Test_IsSubsequence()
+        {
+            Assert.AreEqual(true, BinarySearch.IsSubsequence("abc", "ahbgdc"));
+            Assert.AreEqual(true, BinarySearch.IsSubsequence("aec", "abcde"));
+        }
     }
 }

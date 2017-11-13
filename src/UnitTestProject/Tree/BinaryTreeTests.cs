@@ -163,5 +163,14 @@ namespace UnitTestProject.Tree
 
             Assert.AreEqual(1, Algorithms.Tree.BinaryTreeProblems.FindFrequentTreeSum(node2));
         }
+
+        [TestMethod]
+        public void Test_KthSmallest()
+        {
+            var node1 = new TreeNode(2);
+            node1.left = new TreeNode(1);
+
+            Assert.AreEqual(1, Algorithms.Tree.BinarySearchTree.BSTProblems.KthSmallest(node1, 1));
+        }
     }
 }

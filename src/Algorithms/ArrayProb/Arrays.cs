@@ -1671,7 +1671,7 @@ namespace Algorithms.ArrayProb
                 foreach (var d in D)
                 {
                     var sum = c + d;
-                    if(dict1.ContainsKey(-1 * sum))
+                    if (dict1.ContainsKey(-1 * sum))
                     {
                         ret += dict1[-1 * sum];
                     }
@@ -1723,7 +1723,7 @@ namespace Algorithms.ArrayProb
             int x = -1;
             for (int i = nums.Length - 2; i >= 0; i--)
             {
-                if(nums[i] < nums[i + 1])
+                if (nums[i] < nums[i + 1])
                 {
                     x = i;
                     break;
@@ -1735,7 +1735,7 @@ namespace Algorithms.ArrayProb
                 int l = -1;
                 for (int i = nums.Length - 1; i > x; i--)
                 {
-                    if(nums[i] > nums[x])
+                    if (nums[i] > nums[x])
                     {
                         l = i;
                         break;
@@ -1804,6 +1804,104 @@ namespace Algorithms.ArrayProb
             }
 
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/subarray-sum-equals-k/description/
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <param name="k"></param>
+        /// <returns></returns>
+        public static int SubarraySum(int[] nums, int k)
+        {
+            //    int count = 0;
+            //    int sum = 0;
+            //    for (int i = 0; i < nums.Length; i++)
+            //    {
+            //        for (int j = i; j < nums.Length; j++)
+            //        {
+            //            sum += nums[i];
+            //            if (sum == k)
+            //            {
+            //                count++;
+            //            }
+            //            else if(sum > k)
+            //            {
+            //                sum = 0;
+            //                break;
+            //            }
+            //        }
+            //    }
+
+            //    return count;
+
+            int count = 0;
+            int sum = 0;
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            dict.Add(0, 1);
+            for (int i = 0; i < nums.Length; i++)
+            {
+                sum += nums[i];
+                if (dict.ContainsKey(sum - k))
+                {
+                    count += dict[sum - k];
+                }
+
+                dict.AddOrSet(sum, dict.GetValueOrDefault(sum, 0) + 1);
+            }
+
+            return count;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/discuss/
+        /// </summary>
+        /// <param name="points"></param>
+        /// <returns></returns>
+        public static int FindMinArrowShots(int[,] points)
+        {
+            var jagged = points.ToJaggedArray();
+
+            if (jagged.Length == 0)
+            {
+                return 0;
+            }
+
+            Array.Sort(jagged, (a, b) => a[1] - b[1]);
+
+            int arrowPos = jagged[0][1];
+            int arrowCnt = 1;
+            for (int i = 1; i < jagged.Length; i++)
+            {
+                if (arrowPos >= jagged[i][0])
+                {
+                    continue;
+                }
+                arrowCnt++;
+                arrowPos = jagged[i][1];
+            }
+
+            return arrowCnt;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/task-scheduler/discuss/
+        /// </summary>
+        /// <param name="tasks"></param>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public static int LeastInterval(char[] tasks, int n)
+        {
+            int[] c = new int[26];
+            foreach (char t in tasks)
+            {
+                c[t - 'A']++;
+            }
+            Array.Sort(c);
+            int i = 25;
+            while (i >= 0 && c[i] == c[25]) i--;
+
+            return Math.Max(tasks.Length, (c[25] - 1) * (n + 1) + 25 - i);
         }
     }
 }

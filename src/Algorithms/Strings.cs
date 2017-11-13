@@ -789,7 +789,7 @@ namespace Algorithms
                 dp[i, 0] = dp[i - 1, 0] + s1[i - 1];
                 for (int j = 1; j <= s2.Length; j++)
                 {
-                    if(s1[i - 1] == s2[j - 1])
+                    if (s1[i - 1] == s2[j - 1])
                     {
                         //no deletetion
                         dp[i, j] = dp[i - 1, j - 1];
@@ -835,6 +835,71 @@ namespace Algorithms
             }
 
             return dp[word1.Length, word2.Length];
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/longest-repeating-character-replacement/discuss/
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="k"></param>
+        /// <returns></returns>
+        public static int CharacterReplacement(string s, int k)
+        {
+            int[] count = new int[128];
+            int max = 0;
+            int start = 0;
+            for (int end = 0; end < s.Length; end++)
+            {
+                max = Math.Max(max, ++count[s[end]]);
+                if (max + k <= end - start)
+                    count[s[start++]]--;
+            }
+            return s.Length - start;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/longest-substring-without-repeating-characters/discuss/
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static int LengthOfLongestSubstring(string s)
+        {
+            int max = 0;
+            var dict = new Dictionary<char, int>();
+            int j = 0;
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (dict.ContainsKey(s[i]))
+                {
+                    j = Math.Max(j, dict[s[i]] + 1);
+                }
+                dict.AddOrSet(s[i], i);
+                max = Math.Max(max, i - j + 1);
+            }
+            return max;
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/letter-combinations-of-a-phone-number/description/
+        /// </summary>
+        /// <param name="digits"></param>
+        /// <returns></returns>
+        public static IList<string> LetterCombinations(string digits)
+        {
+            var ans = new Queue<string>();
+            string[] mapping = new string[] { "0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
+            ans.Enqueue("");
+            for (int i = 0; i < digits.Length; i++)
+            {
+                int x = Convert.ToInt32(digits[i].ToString());
+                while (ans.Peek().Length == i)
+                {
+                    string t = ans.Dequeue();
+                    foreach (char s in mapping[x])
+                        ans.Enqueue(t + s);
+                }
+            }
+            return ans.ToList();
         }
     }
 }

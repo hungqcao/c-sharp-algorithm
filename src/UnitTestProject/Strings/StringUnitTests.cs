@@ -125,5 +125,18 @@ namespace UnitTestProject.Strings
         {
             Assert.AreEqual(1, Algorithms.Strings.MinDistance("", "a"));
         }
+
+        [TestMethod]
+        public void Test_characterReplacement()
+        {
+            Assert.AreEqual(4, Algorithms.Strings.CharacterReplacement("ABAB", 2));
+            Assert.AreEqual(4, Algorithms.Strings.CharacterReplacement("AABABBA", 1));
+        }
+
+        [TestMethod]
+        public void Test_LetterCombinations()
+        {
+            var ret = Algorithms.Strings.LetterCombinations("23");
+        }
     }
 }

@@ -978,5 +978,31 @@ namespace Algorithms.Tree
 
             return sum;
         }
+
+        /// <summary>
+        /// https://leetcode.com/problems/house-robber-iii/discuss/
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public static int Rob(TreeNode root)
+        {
+            int[] res = RobHelper(root);
+            return Math.Max(res[0], res[1]);
+        }
+
+        private static int[] RobHelper(TreeNode root)
+        {
+            if (root == null) return new int[2];
+
+            var left = RobHelper(root.left);
+            var right = RobHelper(root.right);
+
+            int[] ret = new int[2];
+
+            ret[0] = root.val + left[1] + right[1];
+            ret[1] = Math.Max(left[0], left[1]) + Math.Max(right[0], right[1]);
+
+            return ret;
+        }
     }
 }

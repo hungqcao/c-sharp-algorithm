@@ -291,14 +291,14 @@ IsCorr1BST  should return true, and print 9.*/
         private static IList<TreeNode> GeneratesTreeNodesHelper(int start, int end)
         {
             IList<TreeNode> nodes = new List<TreeNode>();
-            
-            if(start > end)
+
+            if (start > end)
             {
                 nodes.Add(null);
                 return nodes;
             }
 
-            if(end == start)
+            if (end == start)
             {
                 nodes.Add(new TreeNode(start));
                 return nodes;
@@ -324,7 +324,92 @@ IsCorr1BST  should return true, and print 9.*/
             return nodes;
         }
 
-        //https://leetcode.com/problems/unique-binary-search-trees/discuss/
+        private static int KthSmallestVal;
+        private static int KthSmallestValKth;
+        /// <summary>
+        /// https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="k"></param>
+        /// <returns></returns>
+        public static int KthSmallest(TreeNode root, int k)
+        {
+            KthSmallestValKth = 0;
+            KthSmallestHelper(root, k);
+            return KthSmallestVal;
+        }
 
+        private static void KthSmallestHelper(TreeNode node, int k)
+        {
+            if (node == null)
+            {
+                return;
+            }
+            KthSmallestHelper(node.left, k);
+            ++KthSmallestValKth;
+            if (KthSmallestValKth == k)
+            {
+                KthSmallestVal = node.val;
+                return;
+            }
+            KthSmallestHelper(node.right, k);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public static string serialize(TreeNode root)
+        {
+            StringBuilder builder = new StringBuilder();
+            dfs(root, builder);
+            return builder.ToString();
+        }
+
+        private static void dfs(TreeNode node, StringBuilder builder)
+        {
+            if (node == null)
+            {
+                builder.Append("N").Append("|");
+                return;
+            }
+            builder.Append(node.val).Append("|");
+            dfs(node.left, builder);
+            dfs(node.right, builder);
+        }
+
+        // Decodes your encoded data to tree.
+        public static TreeNode deserialize(string data)
+        {
+            var nodes = data.Split('|');
+            var queue = new Queue<string>();
+            foreach (var item in nodes)
+            {
+                if (!string.IsNullOrWhiteSpace(item))
+                {
+                    queue.Enqueue(item);
+                }
+            }
+            return GetNode(queue);
+        }
+
+        private static TreeNode GetNode(Queue<string> queue)
+        {
+            if (!queue.Any()) return null;
+            var item = queue.Dequeue();
+            if (item.Equals("N")) return null;
+
+            TreeNode node = new TreeNode(int.Parse(item));
+            //var leftNodes = new Queue<int>();
+            //while(queue.Any() && queue.Peek() < node.val)
+            //{
+            //    leftNodes.Enqueue(queue.Dequeue());
+            //}
+
+            node.left = GetNode(queue);
+            node.right = GetNode(queue);
+            return node;
+        }
     }
 }

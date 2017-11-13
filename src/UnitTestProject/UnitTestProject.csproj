@@ -61,6 +61,7 @@
     <Compile Include="Numbers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DivideAndConquerTests.cs" />
+    <Compile Include="DPTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

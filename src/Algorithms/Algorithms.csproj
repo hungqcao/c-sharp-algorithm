@@ -48,6 +48,7 @@
     <Compile Include="ArrayProb\PerimeterIsland.cs" />
     <Compile Include="Backtracking\BackTrackingProblems.cs" />
     <Compile Include="Bit\BitManipulation.cs" />
+    <Compile Include="Comparer.cs" />
     <Compile Include="DataStructures\MapSum.cs" />
     <Compile Include="DivideAndConquer\DivideAndConquer.cs" />
     <Compile Include="DP\DynamicProgramming.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Graph\Problems.cs" />
     <Compile Include="Graph\UnionFind.cs" />
     <Compile Include="LinkedList\LinkedList.cs" />
+    <Compile Include="MultiDimensionalArrayExtensions.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Number\NumberProblems.cs" />
     <Compile Include="Program.cs" />
