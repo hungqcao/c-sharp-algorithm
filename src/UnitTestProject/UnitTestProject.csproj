@@ -54,6 +54,7 @@
     <Compile Include="DataStructureTests\TextEditorTest.cs" />
     <Compile Include="GraphTests.cs" />
     <Compile Include="LinkedLists\LinkedListUnitTest.cs" />
+    <Compile Include="Matrix\MatrixProblemsTests.cs" />
     <Compile Include="Search\SearchUnitTest.cs" />
     <Compile Include="Strings\StringUnitTests.cs" />
     <Compile Include="Tree\BinaryTreeTests.cs" />

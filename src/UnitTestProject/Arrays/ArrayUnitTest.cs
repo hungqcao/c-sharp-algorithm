@@ -247,5 +247,42 @@ namespace UnitTestProject.Arrays
         {
             Assert.AreEqual(8, Algorithms.ArrayProb.Arrays.LeastInterval(new char[] { 'A', 'A', 'B', 'A', 'B', 'B' }, 2));
         }
+
+        [TestMethod]
+        public void Test_RotateMatrix()
+        {
+            var arr = new int[,]
+            {
+                {1,2,3 },
+                {4,5,6 },
+                {7,8,9 }
+            };
+
+            Algorithms.ArrayProb.Arrays.RotateMatrix(arr);
+        }
+
+        [TestMethod]
+        public void Test()
+        {
+            var strings = new string[] { "greeneggs", "ham", "sam", "i", "am" };
+            var sb = new StringBuilder();
+            var dict = new char[26];
+            foreach (var str in strings)
+            {
+                Console.WriteLine(str);
+                foreach (var character in str)
+                {
+                    Console.WriteLine(character);
+                    dict[character - 'a']++;
+                }
+            }
+            for (int i = 0; i < 26; i++)
+            {
+                for (int j = 0; j < dict[i]; j++)
+                {
+                    sb.Append((char)i);
+                }
+            }       
+        }
     }
 }

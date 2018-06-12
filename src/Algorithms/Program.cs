@@ -16,6 +16,30 @@ namespace Algorithms
     {
         static void Main(string[] args)
         {
+            var strings = new string[] { "greeneggs", "ham", "sam", "i", "am" };
+            var sb = new StringBuilder();
+            var dict = new int[26];
+            foreach (var str in strings)
+            {
+                Console.WriteLine(str);
+                foreach (var character in str)
+                {
+                    var idx = character - 'a';
+                    if (idx < 0 || idx >= 26)
+                    {
+                        //ingore unexpected characters
+                        continue;
+                    }
+                    dict[character - 'a']++;
+                }
+            }
+            for (int i = 0; i < 26; i++)
+            {
+                for (int j = 0; j < dict[i]; j++)
+                {
+                    sb.Append((char)('a' +i));
+                }
+            }
             //Trie
             //TrieNode root = new TrieNode();
             //TrieImplementations.Insert(root, "test");

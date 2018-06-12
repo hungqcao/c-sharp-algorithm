@@ -1903,5 +1903,45 @@ namespace Algorithms.ArrayProb
 
             return Math.Max(tasks.Length, (c[25] - 1) * (n + 1) + 25 - i);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        public static void RotateMatrix(int[,] matrix)
+        {
+            int s = 0, e = matrix.GetLength(1) - 1;
+            while (s < e)
+            {
+                // basically we reverse the row order of the matrix. swap(row_i, row_n-i)
+                SwapRow(matrix, s, e);
+                s++; e--;
+            }
+            // 1 2 3    7 8 9
+            // 4 5 6 => 4 5 6
+            // 7 8 9    1 2 3
+
+            // now we just swap 8<->4 9<->1 6<->2
+            //
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = i + 1; j < matrix.GetLength(1); j++)
+                {
+                    int temp = matrix[i,j];
+                    matrix[i,j] = matrix[j,i];
+                    matrix[j,i] = temp;
+                }
+            }
+        }
+
+        private static void SwapRow(int[,] matrix, int start, int end)
+        {
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                int tmp = matrix[start, i];
+                matrix[start, i] = matrix[end, i];
+                matrix[end, i] = tmp;
+            }
+        }        
     }
 }
