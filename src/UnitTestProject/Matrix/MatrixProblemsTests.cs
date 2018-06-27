@@ -21,5 +21,16 @@ namespace Algorithms.Matrix.Tests
             res = MatrixProblems.ComputeArea(-1500000001, 0, -1500000000, 1, 1500000000, 0, 1500000001, 1);
             Assert.AreEqual(2, res);
         }
+
+        [TestMethod()]
+        public void rotateImageTest()
+        {
+            var arr = new int[3][];
+            arr[0] = new int[3] { 1, 2, 3 };
+            arr[1] = new int[3] { 4, 5, 6 };
+            arr[2] = new int[3] { 7, 8, 9 };
+
+            var res = MatrixProblems.rotateImage(arr);
+        }
     }
 }

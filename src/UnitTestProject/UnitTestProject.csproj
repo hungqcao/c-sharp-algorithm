@@ -48,11 +48,13 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArrayProb\ArrayUnitTest.cs" />
     <Compile Include="Arrays\ArrayUnitTest.cs" />
     <Compile Include="BackTrack\BacktrackTest.cs" />
     <Compile Include="DataStructureTests\MapSumTest.cs" />
     <Compile Include="DataStructureTests\TextEditorTest.cs" />
     <Compile Include="GraphTests.cs" />
+    <Compile Include="Graph\GraphTests.cs" />
     <Compile Include="LinkedLists\LinkedListUnitTest.cs" />
     <Compile Include="Matrix\MatrixProblemsTests.cs" />
     <Compile Include="Search\SearchUnitTest.cs" />

@@ -133,6 +133,8 @@ namespace UnitTestProject.Tree
         public void Test_ConstructMaximumBinaryTree()
         {
             var node = Algorithms.Tree.BinaryTreeProblems.ConstructMaximumBinaryTree(new int[] { 3, 2, 1, 6, 0, 5 });
+
+            node = Algorithms.Tree.BinaryTreeProblems.ConstructMaximumBinaryTreeV2(new int[] { 3, 2, 1, 6, 0, 5 });
         }
 
         [TestMethod]

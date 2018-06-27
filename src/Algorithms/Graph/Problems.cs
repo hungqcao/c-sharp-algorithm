@@ -47,5 +47,31 @@ namespace Algorithms.Graph
             shrink(grid, i, j + 1);
             shrink(grid, i, j - 1);
         }
+
+        /// <summary>
+        /// https://leetcode.com/problems/all-paths-from-source-to-target/description/
+        /// </summary>
+        /// <param name="graph"></param>
+        /// <returns></returns>
+        public static IList<IList<int>> AllPathsSourceTarget(int[][] graph)
+        {
+            var result = new List<IList<int>>();
+            Construct(graph, 0, new List<int>(), result);
+            return result;
+        }
+
+        private static void Construct(int[][] graph, int row, IList<int> list, IList<IList<int>> res)
+        {
+            list.Add(row);
+            if (row == graph.LongLength - 1)
+            {
+                res.Add(list);
+                return;
+            }
+            for (int i = 0; i < graph[row].Length; i++)
+            {
+                Construct(graph, graph[row][i], new List<int>(list), res);
+            }
+        }
     }
 }

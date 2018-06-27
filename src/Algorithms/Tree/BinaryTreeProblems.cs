@@ -887,6 +887,33 @@ namespace Algorithms.Tree
             return null;
         }
 
+        public static TreeNode ConstructMaximumBinaryTreeV2(int[] nums)
+        {
+            var root = new TreeNode(nums[0]);
+            for (int i = 1; i < nums.Length; i++)
+            {
+                if(nums[i] > root.val)
+                {
+                    var tmp = new TreeNode(nums[i]);
+                    tmp.left = root;
+                    root = tmp;
+                }
+                else
+                {
+                    var right = root;
+                    while (right.right != null && right.right.val > nums[i])
+                    {
+                        right = right.right;
+                    }
+
+                    TreeNode left = right.right;
+                    right.right = new TreeNode(nums[i]);
+                    right.right.left = left;
+                }
+            }
+            return root;
+        }
+
         /// <summary>
         /// https://leetcode.com/problems/find-largest-value-in-each-tree-row/description/
         /// </summary>

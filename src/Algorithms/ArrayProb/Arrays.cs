@@ -1927,9 +1927,9 @@ namespace Algorithms.ArrayProb
             {
                 for (int j = i + 1; j < matrix.GetLength(1); j++)
                 {
-                    int temp = matrix[i,j];
-                    matrix[i,j] = matrix[j,i];
-                    matrix[j,i] = temp;
+                    int temp = matrix[i, j];
+                    matrix[i, j] = matrix[j, i];
+                    matrix[j, i] = temp;
                 }
             }
         }
@@ -1942,6 +1942,35 @@ namespace Algorithms.ArrayProb
                 matrix[start, i] = matrix[end, i];
                 matrix[end, i] = tmp;
             }
-        }        
+        }
+
+        /// <summary>
+        /// Note: Write a solution that only iterates over the string once and uses O(1) additional memory, since this is what you would be asked to do during a real interview.
+        /// Given a string s, find and return the first instance of a non-repeating character in it.If there is no such character, return '_'.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static char firstNotRepeatingCharacter(string s)
+        {
+            if (string.IsNullOrEmpty(s)) return '_';
+            else
+            {
+                int[] map = new int[26];
+                for (int i = 0; i < s.Length; i++)
+                {
+                    var ind = s[i] - 'a';
+                    map[ind]++;
+                }
+                for (int i = 0; i < s.Length; i++)
+                {
+                    var ind = s[i] - 'a';
+                    if (map[ind] == 1)
+                    {
+                        return s[i];
+                    }
+                }
+            }
+            return '_';
+        }
     }
 }
