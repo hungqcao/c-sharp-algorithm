@@ -22,5 +22,11 @@ namespace Algorithms.Graph.Tests
 
             var res = Problems.AllPathsSourceTarget(jagged);
         }
+
+        [TestMethod()]
+        public void ChampagneTowerTest()
+        {
+            Problems.ChampagneTower(6, 4, 1);
+        }
     }
 }

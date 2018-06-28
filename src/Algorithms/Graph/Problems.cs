@@ -26,7 +26,7 @@ namespace Algorithms.Graph
             {
                 for (int j = 0; j <= grid.GetUpperBound(1); j++)
                 {
-                    if(grid[i, j] == '1')
+                    if (grid[i, j] == '1')
                     {
                         shrink(grid, i, j);
                         count++;
@@ -72,6 +72,34 @@ namespace Algorithms.Graph
             {
                 Construct(graph, graph[row][i], new List<int>(list), res);
             }
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/champagne-tower/description/
+        /// </summary>
+        /// <param name="poured"></param>
+        /// <param name="query_row"></param>
+        /// <param name="query_glass"></param>
+        /// <returns></returns>
+        public static double ChampagneTower(int poured, int query_row, int query_glass)
+        {
+            //double[] res = new double[101];
+            //res[0] = poured;
+            //for (int i = 1; i <= query_row; i++)
+            //{
+            //    for (int j = 0; j <= i; j++)
+            //    {
+
+            //    }
+            //}
+            double[] dp = new double[101]; dp[0] = poured;
+            for (int row = 1; row <= query_row; row++)
+                for (int i = row; i >= 0; i--)
+                {
+                    dp[i] = Math.Max(0.0, (dp[i] - 1) / 2);
+                    dp[i + 1] += dp[i];
+                }
+            return Math.Min(dp[query_glass], 1.0);
         }
     }
 }
