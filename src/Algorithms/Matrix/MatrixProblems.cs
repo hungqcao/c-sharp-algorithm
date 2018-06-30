@@ -88,7 +88,7 @@ namespace Algorithms.Matrix
                         hashSet.Add(rowStr);
                         hashSet.Add(colStr);
                         hashSet.Add(squareStr);
-                    }
+                    }   
                 }
             }
 
