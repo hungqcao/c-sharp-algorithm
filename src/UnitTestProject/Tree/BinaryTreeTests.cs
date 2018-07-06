@@ -6,6 +6,53 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+namespace Algorithms.Tree.Tests
+{
+    [TestClass()]
+    public class BinaryTreeTests
+    {
+        [TestMethod()]
+        public void ConstructMaximumBinaryTreeV2Test()
+        {
+            BinaryTreeProblems.ConstructMaximumBinaryTreeV2(new int[] { 3, 2, 1, 6, 0, 5 });
+        }
+
+        [TestMethod()]
+        public void PruneTreeTest()
+        {
+            {
+                var node1 = new TreeNode(1);
+                var node2 = new TreeNode(0);
+                var node3 = new TreeNode(1);
+                var node4 = new TreeNode(0);
+                var node5 = new TreeNode(0);
+                var node6 = new TreeNode(0);
+                var node7 = new TreeNode(1);
+                node1.left = node2;
+                node1.right = node3;
+                node2.left = node4;
+                node2.right = node5;
+                node3.left = node6;
+                node3.right = node7;
+
+
+                BinaryTreeProblems.PruneTree(node1);
+            }
+            {
+                var node1 = new TreeNode(1);
+                var node2 = new TreeNode(0);
+                var node3 = new TreeNode(0);
+                var node4 = new TreeNode(1);
+                node1.right = node2;
+                node2.left = node3;
+                node2.right = node4;
+
+                BinaryTreeProblems.PruneTree(node1);
+            }
+        }
+    }
+}
+
 namespace UnitTestProject.Tree
 {
     [TestClass]

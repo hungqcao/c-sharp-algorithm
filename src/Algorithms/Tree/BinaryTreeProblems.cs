@@ -865,7 +865,7 @@ namespace Algorithms.Tree
             for (int i = 0; i < nums.Length; i++)
             {
                 var cur = new TreeNode(nums[i]);
-                while(stack.Any() && stack.Peek().val < cur.val)
+                while (stack.Any() && stack.Peek().val < cur.val)
                 {
                     var pop = stack.Pop();
                     cur.left = pop;
@@ -885,6 +885,30 @@ namespace Algorithms.Tree
             }
 
             return null;
+        }
+
+        public static TreeNode ConstructMaximumBinaryTreeV2(int[] nums)
+        {
+            var root = new TreeNode(nums[0]);
+            for (int i = 1; i < nums.Length; i++)
+            {
+                TreeNode node = new TreeNode(nums[i]);
+                if (nums[i] > root.val)
+                {
+                    var newRoot = new TreeNode(nums[i]);
+                    newRoot.left = root;
+                    root = newRoot;
+                }
+                else
+                {
+                    TreeNode right = root;
+                    while (right.right != null && right.right.val > node.val) right = right.right; // find a right branch is small than the new node
+                    TreeNode left = right.right;
+                    node.left = left;
+                    right.right = node;
+                }
+            }
+            return root;
         }
 
         public static TreeNode ConstructMaximumBinaryTreeV2(int[] nums)
@@ -923,7 +947,7 @@ namespace Algorithms.Tree
         {
             var ret = new List<int>();
             if (root == null) return ret;
-             var queue = new Queue<TreeNode>();
+            var queue = new Queue<TreeNode>();
             queue.Enqueue(root);
             while (queue.Any())
             {
@@ -957,7 +981,7 @@ namespace Algorithms.Tree
                 var size = queue.Count;
                 for (int i = 0; i < size; i++)
                 {
-                     item = queue.Dequeue();
+                    item = queue.Dequeue();
                     if (item.right != null) queue.Enqueue(item.right);
                     if (item.left != null) queue.Enqueue(item.left);
                 }
@@ -983,7 +1007,7 @@ namespace Algorithms.Tree
 
         private static int FindFrequenTreeSumHelper(TreeNode node)
         {
-            if(node == null)
+            if (node == null)
             {
                 return 0;
             }
@@ -1030,6 +1054,18 @@ namespace Algorithms.Tree
             ret[1] = Math.Max(left[0], left[1]) + Math.Max(right[0], right[1]);
 
             return ret;
+        }
+
+        public static TreeNode PruneTree(TreeNode root)
+        {
+            if (root == null) return null;
+
+            root.left = PruneTree(root.left);
+            root.right = PruneTree(root.right);
+
+            if (root.val == 0 && (root.left == null || root.right == null)) root = null;
+
+            return root;
         }
     }
 }
