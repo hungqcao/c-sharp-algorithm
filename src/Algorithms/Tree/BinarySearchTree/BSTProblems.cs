@@ -355,6 +355,28 @@ IsCorr1BST  should return true, and print 9.*/
             KthSmallestHelper(node.right, k);
         }
 
+        private static int KthLargestVal;
+        private static int CurrentK;
+        public static int KthLargest(TreeNode root, int k)
+        {
+            CurrentK = 0;
+            KthLargestHelper(root, 2);
+            return KthLargestVal;
+        }
+
+        private static void KthLargestHelper(TreeNode node, int k)
+        {
+            if (node == null) return;
+            KthLargestHelper(node.right, k);
+            ++CurrentK;
+            if (CurrentK == k)
+            {
+                KthLargestVal = node.val;
+                return;
+            }
+            KthLargestHelper(node.left, k);
+        }
+
         /// <summary>
         /// 
         /// </summary>

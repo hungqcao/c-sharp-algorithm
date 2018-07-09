@@ -934,5 +934,21 @@ namespace Algorithms
             }
             return list;
         }
+
+        /// <summary>
+        /// https://leetcode.com/problems/score-of-parentheses/description/
+        /// </summary>
+        /// <param name="S"></param>
+        /// <returns></returns>
+        public static int ScoreOfParentheses(string S)
+        {
+            int res = 0, layer = 0;
+            for (var i = 0; i < S.Length; i ++)
+            {
+                if (S[i] == '(') layer++; else layer--;
+                if (S[i] == '(' && S[i + 1] == ')') res += 1 << (layer - 1);
+            }
+            return res;
+        }
     }
 }

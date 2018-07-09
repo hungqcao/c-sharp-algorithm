@@ -16,5 +16,12 @@ namespace Algorithms.Tests
         {
             Strings.partitionLabels("ababcbacadefegdehijhklij");
         }
+
+        [TestMethod()]
+        public void ScoreOfParenthesesTest()
+        {
+            var res = Strings.ScoreOfParentheses("(()(()))");
+            res = Strings.ScoreOfParentheses("()()");
+        }
     }
 }

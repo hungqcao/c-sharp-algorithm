@@ -1972,5 +1972,156 @@ namespace Algorithms.ArrayProb
             }
             return '_';
         }
+
+        /// <summary>
+        /// https://www.geeksforgeeks.org/merging-intervals/
+        /// </summary>
+        /// <param name="intervals"></param>
+        /// <returns></returns>
+        public static Interval[] MergeIntervals(IEnumerable<Interval> intervals)
+        {
+            intervals = intervals.OrderBy(_ => _.Start);
+            Stack<Interval> stack = new Stack<Interval>();
+            foreach (var item in intervals)
+            {
+                if (!stack.Any()) stack.Push(item); // init
+                else
+                {
+                    var top = stack.Peek();
+                    if (top.End < item.Start) stack.Push(item);
+                    else if (top.End < item.End)
+                    {
+                        top.End = item.End;
+                    }
+                }
+            }
+            return stack.ToArray();
+        }
+
+        /// <summary>
+        /// https://www.geeksforgeeks.org/insert-in-sorted-and-non-overlapping-interval-array/
+        /// </summary>
+        /// <param name="intervals"></param>
+        /// <param name="interval"></param>
+        /// <returns></returns>
+        public static Interval[] InsertInterval(Interval[] intervals, Interval interval)
+        {
+            List<Interval> result = new List<Interval>();
+            // Case 1
+            if (intervals[0].Start > interval.End)
+            {
+                // At the beginning
+                result.Add(interval);
+                result.AddRange(intervals);
+                return result.ToArray();
+            }
+            else if (intervals[intervals.Length - 1].End < interval.Start)
+            {
+                // At the end
+                result.AddRange(intervals);
+                result.Add(interval);
+                return result.ToArray();
+            }
+            else if (interval.Start <= intervals[0].Start && interval.End >= intervals[intervals.Length - 1].End)
+            {
+                // Over everyone
+                return new Interval[] { interval };
+            }
+
+            // Insert into mid or merge to existing
+            for (int i = 0; i < intervals.Length; i++)
+            {
+                if (!intervals[i].IsOverlapped(interval))
+                {
+                    result.Add(intervals[i]);
+
+                    // Mid
+                    if(i < intervals.Length && interval.Start > intervals[i].End && interval.End < intervals[i + 1].Start)
+                    {
+                        result.Add(interval);
+                    }
+                    continue;
+                }
+                else
+                {
+                    // Overlap some intervals
+                    Interval temp = new Interval(0, 0);
+                    temp.Start = Math.Min(intervals[i].Start, interval.Start);
+                    var overlapped = interval.IsOverlapped(intervals[i]);
+                    while(i < intervals.Length && overlapped)
+                    {
+                        temp.End = Math.Max(interval.End, intervals[i].End);
+                        if(i == intervals.Length - 1)
+                        {
+                            overlapped = false;
+                            /// end loop
+                        }
+                        else
+                        {
+                            overlapped = interval.IsOverlapped(intervals[i + 1]);
+                        }
+                        i++;
+                    }
+
+                    i--;
+                    result.Add(temp);
+                }
+            }
+
+            return result.ToArray();
+        }
+
+        private static int BSInsertPosition(Interval[] input, Interval item, int low, int high)
+        {
+            if (high == low)
+            {
+                return low;
+            }
+            else if (high < low)
+            {
+                return low + 1;
+            }
+
+            int mid = (low + high) / 2;
+            if (input[mid].Start == item.Start) return mid;
+            else
+            {
+                if (input[mid].Start > item.Start)
+                {
+                    return BSInsertPosition(input, item, low, mid - 1);
+                }
+                else
+                {
+                    return BSInsertPosition(input, item, mid + 1, high);
+                }
+            }
+        }
+
+        /// <summary>
+        /// https://leetcode.com/problems/daily-temperatures/description/
+        /// </summary>
+        /// <param name="temperatures"></param>
+        /// <returns></returns>
+        public static int[] DailyTemperatures(int[] temperatures)
+        {
+            Stack<int> st = new Stack<int>();
+            Dictionary<int, int> dict = new Dictionary<int, int>();// key: indexes of each element, value: indexes of next greater element
+            for (int i = 0; i < temperatures.Length; i++)
+            {
+                while(st.Any() && temperatures[st.Peek()] < temperatures[i])
+                {
+                    dict.Add(st.Pop(), i);
+                }
+                st.Push(i);
+            }
+
+            while (st.Any())
+            {
+                var pop = st.Pop();
+                dict.Add(pop, pop);
+            }
+
+            return Enumerable.Range(0, temperatures.Length).Select(i => dict[i] - i).ToArray();
+        }
     }
 }

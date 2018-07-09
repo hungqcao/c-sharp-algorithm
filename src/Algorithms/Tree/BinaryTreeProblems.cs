@@ -892,30 +892,6 @@ namespace Algorithms.Tree
             var root = new TreeNode(nums[0]);
             for (int i = 1; i < nums.Length; i++)
             {
-                TreeNode node = new TreeNode(nums[i]);
-                if (nums[i] > root.val)
-                {
-                    var newRoot = new TreeNode(nums[i]);
-                    newRoot.left = root;
-                    root = newRoot;
-                }
-                else
-                {
-                    TreeNode right = root;
-                    while (right.right != null && right.right.val > node.val) right = right.right; // find a right branch is small than the new node
-                    TreeNode left = right.right;
-                    node.left = left;
-                    right.right = node;
-                }
-            }
-            return root;
-        }
-
-        public static TreeNode ConstructMaximumBinaryTreeV2(int[] nums)
-        {
-            var root = new TreeNode(nums[0]);
-            for (int i = 1; i < nums.Length; i++)
-            {
                 if(nums[i] > root.val)
                 {
                     var tmp = new TreeNode(nums[i]);

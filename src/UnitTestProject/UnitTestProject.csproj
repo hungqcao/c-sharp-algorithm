@@ -46,6 +46,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArrayProb\ArrayUnitTest.cs" />
@@ -60,6 +63,7 @@
     <Compile Include="Search\SearchUnitTest.cs" />
     <Compile Include="Strings\StringUnitTests.cs" />
     <Compile Include="StringUnitTests.cs" />
+    <Compile Include="Tree\BinarySearchTree\BST.cs" />
     <Compile Include="Tree\BinaryTreeTests.cs" />
     <Compile Include="Tree\BST.cs" />
     <Compile Include="Numbers.cs" />
