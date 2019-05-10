@@ -50,6 +50,7 @@
     <Compile Include="ArrayProb\Arrays.cs" />
     <Compile Include="ArrayProb\Interval.cs" />
     <Compile Include="ArrayProb\PerimeterIsland.cs" />
+    <Compile Include="ArrayProb\Permutations.cs" />
     <Compile Include="Backtracking\BackTrackingProblems.cs" />
     <Compile Include="Bit\BitManipulation.cs" />
     <Compile Include="Comparer.cs" />
