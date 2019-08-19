@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ConcurrentPriorityQueue, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PriorityQueue.0.1.0\lib\net45\ConcurrentPriorityQueue.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -70,6 +73,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Search\BinarySearch.cs" />
     <Compile Include="Search\JumpSearch.cs" />
+    <Compile Include="Set\Sudoku.cs" />
     <Compile Include="Sorting\BinaryInsertionSort.cs" />
     <Compile Include="Sorting\RadixSort.cs" />
     <Compile Include="Sorting\InsertionSort.cs" />
@@ -82,10 +86,14 @@
     <Compile Include="Trie\TrieNode.cs" />
     <Compile Include="UnionFind.cs" />
     <Compile Include="Utils.cs" />
+    <Compile Include="WordBreak\WordBreakII.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Heap\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
